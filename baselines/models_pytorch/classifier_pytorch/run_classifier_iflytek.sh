@@ -50,10 +50,10 @@ if [ $# == 0 ]; then
       --do_eval \
       --do_lower_case \
       --max_seq_length=128 \
-      --per_gpu_train_batch_size=4 \
+      --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
-      --num_train_epochs=1 \
+      --num_train_epochs=3 \
       --logging_steps=300 \
       --save_steps=300 \
       --output_dir=$OUTPUT_DIR  \

@@ -46,9 +46,11 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 |    | IFLYTEK(acc)     | 
 | :----:| :----:  | 
 |  Human | 80.30 |
-|  Baseline |  (Report Result on 2021-09-11) | 
-|   Model-centric | (Report Result on 2021-09-12)    | 
+|  Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |  56.42 | 
+|   Model-centric | 59.31    | 
 |   Data-centric | (Report Result on 2021-09-14)    | 
+
+   <img src="./resources/img/improve.jpeg"  width="45%" height="45%" />
 
 ## 实验分析 
 TODO 这里是实验分析
@@ -66,6 +68,8 @@ TODO 这里是实验分析
       1）更多数据：数据增强、数据生成或搜集更多数据--->获得更多的输入数据。
       2）更一致的标签定义：当有些类别容易混淆的时候，改进标签的定义--->基于清晰的标签定义，纠正部分数据的标签。
     #4.重复#1-#3的步骤。
+   <img src="./resources/img/lifec.jpeg"  width="45%" height="45%" />
+   <img src="./resources/img/takeaway2.jpeg"  width="45%" height="45%" />
 
 ## DataCLUE有什么特点
 1、国内首个以数据为中心的AI测评。之前的测评一般是在固定的数据集下使用不同的模型或学习方式来提升效果，而DataCLUE是需要改进数据集。
@@ -134,6 +138,10 @@ TODO 数据处理方法简介
 
 ## 贡献与参与
    添加微信入DataCLUE群:
-   <img src="./resources/img/bxu.jpg"  width="45%" height="45%" />   
+   <img src="./resources/img/teamgroup.jpeg"  width="45%" height="45%" />
+   <img src="./resources/img/bxu.jpg"  width="30%" height="30%" />   
 
    QQ群:836811304
+   
+## 参考资料
+添加中。。。
