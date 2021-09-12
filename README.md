@@ -50,7 +50,7 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 |   Model-centric | 59.31    | 
 |   Data-centric | (Report Result on 2021-09-14)    | 
 
-   <img src="./resources/img/improve.jpeg"  width="45%" height="45%" />
+   <img src="./resources/img/improve.jpeg"  width="80%" height="80%" />
 
 ## 实验分析 
 TODO 这里是实验分析
@@ -68,8 +68,8 @@ TODO 这里是实验分析
       1）更多数据：数据增强、数据生成或搜集更多数据--->获得更多的输入数据。
       2）更一致的标签定义：当有些类别容易混淆的时候，改进标签的定义--->基于清晰的标签定义，纠正部分数据的标签。
     #4.重复#1-#3的步骤。
-   <img src="./resources/img/lifec.jpeg"  width="45%" height="45%" />
-   <img src="./resources/img/takeaway2.jpeg"  width="45%" height="45%" />
+   <img src="./resources/img/lifec.jpeg"  width="80%" height="80%" />
+   <img src="./resources/img/takeaway2.jpeg"  width="80%" height="80%" />
 
 ## DataCLUE有什么特点
 1、国内首个以数据为中心的AI测评。之前的测评一般是在固定的数据集下使用不同的模型或学习方式来提升效果，而DataCLUE是需要改进数据集。
