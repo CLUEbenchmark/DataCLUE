@@ -96,7 +96,9 @@ TODO 这里是实验分析
        bash run_classifier_xxx.sh
        如运行: bash run_classifier_iflytek.sh 会开始iflytek任务的训练。
        训练完后也会得到在验证集上的效果，见 ./output_dir/bert/checkpoint_eval_results.txt
-
+ 或者：
+ 转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
+  
 ## DataCLUE测评及规则
 ### 1.测评方式：
 修改训练集和验证集，并将压缩包上传到<a href='https://www.CLUEbenchmarks.com'>CLUE benchmark</a>
