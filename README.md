@@ -104,7 +104,10 @@ TODO 这里是实验分析
 ### 1.测评方式：
 修改训练集和验证集，并将压缩包上传到<a href='https://www.CLUEbenchmarks.com'>CLUE benchmark</a>
 
-使用如下命令得到压缩包: zip dataclue_<team_name>_<data_string>.zip train.json dev.json
+使用如下命令得到压缩包: zip dataclue_<研究机构>_<用户名>_<时间字符串>.zip train.json dev.json
+
+提交时，模型描述需包含关键词"dataclue"。研究机构、用户名，为【测评注册】页面的对应的名字。
+
 具体格式见：<a href='./resources/dataclue_submit_examples/dataclue_submit_examples.zip'>提交样例</a>
 
 ### 2.测评规则：
