@@ -23,7 +23,7 @@ DataCLUE: A Chinese Data-centric Language Evaluation Benchmark
 
 Updates
 -----------------------------------------------
-**\*\*\*\*\* 2021-09-19: 发布<a href='./resources/value_added_services/'>DataCLUE增值服务v1.0</a>：
+**\*\*\*\*\* 2021-09-19: 发布<a href='https://www.cluebenchmarks.com/dataclue.html'>DataCLUE增值服务v1.0</a>：
 
     1）标签定义(119)；2）训练集中-可疑数据(4684)；3）标签的混淆矩阵(119*119)
 
