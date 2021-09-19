@@ -19,6 +19,16 @@ DataCLUE: A Chinese Data-centric Language Evaluation Benchmark
 | [学习资料](#学习资料) | 文章、PPT、分享视频及选手方案 |
 | [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
 
+
+
+Updates
+-----------------------------------------------
+**\*\*\*\*\* 2021-09-19: 发布<a href='./resources/value_added_services/'>DataCLUE增值服务v1.0</a>：
+
+    1）标签定义(119)；2）训练集中-可疑数据(4684)；3）标签的混淆矩阵(119*119)
+
+add method to deploy ablert_tiny to mobile devices with only 0.1 second inference time for sequence length 128, 60M memory \*\*\*\*\***
+
 ## 简介
 以数据为中心（Data-centric）的AI，是一种新型的AI探索方向。它的核心问题是如何通过系统化的改造你的数据（无论是输入或者标签）来提高最终效果。
 传统的AI是以模型为中心（Model-centric）的，主要考虑的问题是如何通过改造或优化模型来提高最终效果，它通常建立在一个比较固定的数据集上。
