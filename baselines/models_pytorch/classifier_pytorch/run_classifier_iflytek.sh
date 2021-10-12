@@ -49,11 +49,11 @@ if [ $# == 0 ]; then
       --do_train \
       --do_eval \
       --do_lower_case \
-      --max_seq_length=128 \
+      --max_seq_length=32 \
       --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
-      --num_train_epochs=3 \
+      --num_train_epochs=6 \
       --logging_steps=300 \
       --save_steps=300 \
       --output_dir=$OUTPUT_DIR  \
@@ -70,11 +70,11 @@ elif [ $1 == "predict" ]; then
       --task_name=$TASK_NAME \
       --do_predict \
       --do_lower_case \
-      --max_seq_length=128 \
+      --max_seq_length=32 \
       --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
-      --num_train_epochs=3.0 \
+      --num_train_epochs=6 \
       --logging_steps=300 \
       --save_steps=300 \
       --output_dir=$OUTPUT_DIR \
