@@ -199,7 +199,7 @@ class IflytekProcessor(DataProcessor):
     def get_labels(self):
         """See base class."""
         labels = []
-        for i in range(119):
+        for i in range(118):
             labels.append(str(i))
         return labels
 
