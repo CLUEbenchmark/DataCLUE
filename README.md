@@ -49,9 +49,9 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 ## 实验结果
 |    | IFLYTEK(F1 Score, macro)     | 
 | :----:| :----:  | 
-|  Human | ? |
-|  Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |  0.64 | 
-|   Model-centric | 0.67    | 
+|  Human | 87.4 |
+|  Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |  64.0 | 
+|   Model-centric | 66.0    | 
 |   Data-centric | ?    | 
 
    <img src="./resources/img/improve.jpeg"  width="80%" height="80%" />
