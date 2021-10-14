@@ -199,7 +199,7 @@ class IflytekProcessor(DataProcessor):
     def get_labels(self):
         """See base class."""
         labels = []
-        for i in range(118):
+        for i in range(119):
             labels.append(str(i))
         return labels
 
@@ -215,6 +215,44 @@ class IflytekProcessor(DataProcessor):
                 InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
 
+
+
+class CICProcessor(DataProcessor):
+    """Processor for the IFLYTEK data set (CLUE version)."""
+
+    def get_train_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(
+            self._read_json(os.path.join(data_dir, "train.json")), "train")
+
+    def get_dev_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(
+            self._read_json(os.path.join(data_dir, "dev.json")), "dev")
+
+    def get_test_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(
+            self._read_json(os.path.join(data_dir, "test_public.json")), "test")
+
+    def get_labels(self):
+        """See base class."""
+        labels = []
+        for i in range(119):
+            labels.append(str(i))
+        return labels
+
+    def _create_examples(self, lines, set_type):
+        """Creates examples for the training and dev sets."""
+        examples = []
+        for (i, line) in enumerate(lines):
+            guid = "%s-%s" % (set_type, i)
+            text_a = line['sentence']
+            text_b = None
+            label = str(line['label']) if set_type != 'test' else "0"
+            examples.append(
+                InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+        return examples
 
 class AfqmcProcessor(DataProcessor):
     """Processor for the AFQMC data set (CLUE version)."""
@@ -500,6 +538,8 @@ clue_processors = {
     'csl': CslProcessor,
     'wsc': WscProcessor,
     'copa': CopaProcessor,
+    'cic': CICProcessor,
+
 }
 
 clue_output_modes = {
@@ -511,4 +551,6 @@ clue_output_modes = {
     'csl': "classification",
     'wsc': "classification",
     'copa': "classification",
+    'cic':  "classification",
+
 }

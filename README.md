@@ -1,7 +1,7 @@
 # DataCLUE
 以数据为中心的AI测评(DataCLUE)
 
-DataCLUE: A Chinese Data-centric Language Evaluation Benchmark
+DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
 
 ## 内容导引
 | 章节 | 描述 |
@@ -19,15 +19,6 @@ DataCLUE: A Chinese Data-centric Language Evaluation Benchmark
 | [学习资料](#学习资料) | 文章、PPT、分享视频及选手方案 |
 | [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
 
-
-
-Updates
------------------------------------------------
-**\*\*\*\*\* 2021-09-19: 发布<a href='https://www.cluebenchmarks.com/dataclue.html'>DataCLUE增值服务v1.0</a>：
-
-    1）标签定义(119)；2）训练集中-可疑数据(4684)；3）标签的混淆矩阵(119*119)
-
-add method to deploy ablert_tiny to mobile devices with only 0.1 second inference time for sequence length 128, 60M memory \*\*\*\*\***
 
 ## 简介
 以数据为中心（Data-centric）的AI，是一种新型的AI探索方向。它的核心问题是如何通过系统化的改造你的数据（无论是输入或者标签）来提高最终效果。
@@ -48,17 +39,20 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 参与测评者需提交修改后的训练集和验证的压缩包。
 
 ## 任务描述和统计
-| Corpus   | Train     | Dev  |Test | Label Defintion  | High Quality Data(part) | Data & Model Analysis Report  |
+| Corpus   | Train     | Dev  |Test | Label Defintion  | Test_public(High Quality Data) | Data & Model Analysis Report  |
 | :----:| :----:  |:----:  |:----:  |:----:  |:----:  |:----:  |
-|   IFLYTEK    | 12133 | 2599 | >=2000 |Stage 1 | Stage 2 | Stage 1 & 2 |
+|   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | Stage 1 & 2 |
+
+    Train/Dev: 含有噪声的数据，都含有一定比例有标注错误的标签；
+    Test_public：高质量数据（标注准确率95%或以上），用于评估改进数据集算法的最新效果，不能用于模型训练。
 
 ## 实验结果
-|    | IFLYTEK(acc)     | 
+|    | IFLYTEK(F1 Score, macro)     | 
 | :----:| :----:  | 
-|  Human | 80.30 |
-|  Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |  56.42 | 
-|   Model-centric | 59.31    | 
-|   Data-centric | (Report Result on 2021-09-14)    | 
+|  Human | ? |
+|  Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |  0.64 | 
+|   Model-centric | 0.67    | 
+|   Data-centric | ?    | 
 
    <img src="./resources/img/improve.jpeg"  width="80%" height="80%" />
 
@@ -104,9 +98,9 @@ TODO 这里是实验分析
            cd ./baselines/models_pytorch/classifier_pytorch
     3、运行对应任务的脚本(GPU方式): 会自动下载模型和任务数据并开始运行。
        bash run_classifier_xxx.sh
-       如运行: bash run_classifier_iflytek.sh 会开始iflytek任务的训练。
+       如运行: bash run_classifier_cic.sh 会开始iflytek任务的训练。
        训练完后也会得到在验证集上的效果，见 ./output_dir/bert/checkpoint_eval_results.txt
-        运行: bash run_classifier_iflytek.sh predict 会在测试集上做预测，并且生成预测文件，见: /output_dir/bert/test_prediction.json
+        运行: bash run_classifier_cic.sh predict 会在测试集上做预测，并且生成预测文件，见: /output_dir/bert/test_prediction.json
  或者：
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
@@ -137,14 +131,17 @@ TODO 这里是实验分析
 
 ## 数据集介绍
 
-1、IFLYTEK 长文本分类数据集 Long Text classification
-该数据集关于app应用描述的长文本标注数据，包含和日常生活相关的各类应用主题，共119个类别："打车":0,"地图导航":1,"免费WIFI":2,"租车":3,….
-,"女性":115,"经营":116,"收款":117,"其他":118(分别用0-118表示)。
-    
-    数量，训练集：12133 ；验证集：2599
+1、CIC 客户意图识别 Customer Intent Classification
+该数据集关于客户意图的文本，包括118个类别。如：抱怨商品涨价了、表达不满/生气、表达赞美/满意、表示不想要了、表示地址正确等。
+   
+    数量，训练集(train)：10000 ；验证集(dev)：2000；测试集_公开(test_public)：2000；测试集_私有（test_private）：>=3000 
     例子：
-    {"label": "110", "label_des": "社区超市", "sentence": "朴朴快送超市创立于2016年，专注于打造移动端30分钟即时配送一站式购物平台，商品品类包含水果、蔬菜、肉禽蛋奶、海鲜水产、粮油调味、酒水饮料、休闲食品、日用品、外卖等。朴朴公司希望能以全新的商业模式，更高效快捷的仓储配送模式，致力于成为更快、更好、更多、更省的在线零售平台，带给消费者更好的消费体验，同时推动中国食品安全进程，成为一家让社会尊敬的互联网公司。,朴朴一下，又好又快,1.配送时间提示更加清晰友好2.保障用户隐私的一些优化3.其他提高使用体验的调整4.修复了一些已知bug"}
-    每一条数据有三个属性，从前往后分别是 类别ID，类别名称，文本内容。
+    {"id": 10000, "label": "38", "sentence": "就一个吸汗带很便宜的呀", "label_des": "讨价还价"}
+    {"id": 10002, "label": "114", "sentence": "不合适包运费险退换吗", "label_des": "咨询运费险赔付规则"}
+    {"id": 10004, "label": "23", "sentence": "刚好昨天拍少了一件，那我退了重新拍吧", "label_des": "表示要重拍"}
+    {"id": 10005, "label": "22", "sentence": "我有两个退货，麻烦同意下", "label_des": "表示需要退货退款"}
+    {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
+     
 
 ## 数据处理方法简介
 TODO 数据处理方法简介

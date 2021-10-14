@@ -5,7 +5,7 @@
 # @Last Modified by:   bo.shi
 # @Last Modified time: 2019-12-05 11:23:45
 
-TASK_NAME="iflytek"
+TASK_NAME="cic"
 MODEL_NAME="chinese_rbtl3_pytorch"
 CURRENT_DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 echo "CURRENT_DIR:"+$CURRENT_DIR
@@ -49,8 +49,8 @@ if [ $# == 0 ]; then
       --do_train \
       --do_eval \
       --do_lower_case \
-      --max_seq_length=256 \
-      --per_gpu_train_batch_size=64 \
+      --max_seq_length=32 \
+      --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
       --num_train_epochs=6 \
@@ -70,7 +70,7 @@ elif [ $1 == "predict" ]; then
       --task_name=$TASK_NAME \
       --do_predict \
       --do_lower_case \
-      --max_seq_length=256 \
+      --max_seq_length=32 \
       --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
