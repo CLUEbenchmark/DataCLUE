@@ -17,12 +17,13 @@ def simple_accuracy(preds, labels):
 
 def acc_and_f1(preds, labels):
     acc = simple_accuracy(preds, labels)
-    f1 = f1_score(y_true=labels, y_pred=preds)
+    f1 = f1_score(y_true=labels, y_pred=preds,average="macro")
     return {
         "acc": acc,
         "f1": f1,
         "acc_and_f1": (acc + f1) / 2,
     }
+
 
 def pearson_and_spearman(preds, labels):
     pearson_corr = pearsonr(preds, labels)[0]
@@ -51,5 +52,7 @@ def compute_metrics(task_name, preds, labels):
         return {"acc": simple_accuracy(preds, labels)}
     elif task_name == "copa":
         return {"acc": simple_accuracy(preds, labels)}
+    elif task_name == "cic":
+        return {"acc": acc_and_f1(preds, labels)}
     else:
         raise KeyError(task_name)
