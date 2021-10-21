@@ -53,7 +53,7 @@ if [ $# == 0 ]; then
       --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
-      --num_train_epochs=6 \
+      --num_train_epochs=15 \
       --logging_steps=300 \
       --save_steps=300 \
       --output_dir=$OUTPUT_DIR  \
@@ -74,7 +74,7 @@ elif [ $1 == "predict" ]; then
       --per_gpu_train_batch_size=32 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
-      --num_train_epochs=6 \
+      --num_train_epochs=15 \
       --logging_steps=300 \
       --save_steps=300 \
       --output_dir=$OUTPUT_DIR \
