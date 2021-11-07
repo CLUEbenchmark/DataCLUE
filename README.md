@@ -131,6 +131,12 @@ TODO 这里是实验分析
  或者：
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
+### 运行simple_baseline直接生成可提交结果
+```
+cd baselines/simple_baseline
+python main.py
+```
+
 ## DataCLUE测评及规则
 ### 1.测评方式：
 修改训练集和验证集，并将压缩包上传到<a href='https://www.CLUEbenchmarks.com'>CLUE benchmark</a>
