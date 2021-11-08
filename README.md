@@ -132,6 +132,10 @@ TODO 这里是实验分析
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
 ### 运行simple_baseline直接生成可提交结果
+主要思路：
+1. 通过训练一个分类模型根据预测的熵找出数据中最有可能错误的样本；
+2. 使用数据增强提升数据量；
+3. 将标签定义增强后添加到训练集中增加数据量。 
 ```
 cd baselines/simple_baseline
 python main.py
