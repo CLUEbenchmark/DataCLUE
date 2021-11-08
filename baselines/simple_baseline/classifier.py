@@ -10,7 +10,7 @@ from textda.data_expansion import data_expansion
 
 os.environ["TOKENIZERS_PARALLELISM"] = 'false'
 PRETRAIN = 'hfl/rbtl3'
-metric = load_metric("f1")
+metric = load_metric("f1") # problem TODO
 
 
 def compute_metrics(eval_pred):
