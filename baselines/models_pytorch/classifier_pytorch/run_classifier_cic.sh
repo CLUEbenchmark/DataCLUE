@@ -50,7 +50,7 @@ if [ $# == 0 ]; then
       --do_eval \
       --do_lower_case \
       --max_seq_length=32 \
-      --per_gpu_train_batch_size=32 \
+      --per_gpu_train_batch_size=64 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
       --num_train_epochs=15 \
@@ -71,7 +71,7 @@ elif [ $1 == "predict" ]; then
       --do_predict \
       --do_lower_case \
       --max_seq_length=32 \
-      --per_gpu_train_batch_size=32 \
+      --per_gpu_train_batch_size=64 \
       --per_gpu_eval_batch_size=32 \
       --learning_rate=2e-5 \
       --num_train_epochs=15 \
