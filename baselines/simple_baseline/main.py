@@ -1,5 +1,5 @@
 # if you meet this issue: ConnectionError: Couldn't reach https://raw.githubusercontent.com/huggingface/datasets/1.14.0/metrics/f1/f1.py
-# you can add one line at /private/etc/hosts
+# you can add one line at /etc/hosts
 #  185.199.108.133 raw.githubusercontent.com
 # check more detail below:
 # https://programmerah.com/solved-connection-error-couldnt-reach-http-raw-githubusercontent-com-huggingface-41668/
@@ -17,6 +17,12 @@ from classifier import get_prediction
 1. Miss label data(y): 通过训练一个分类模型根据预测的熵找出数据中最有可能标签错误的样本，并丢弃；
 2. Data augment(X):使用数据增强提升数据量，即对输入文本的增强；
 3. Label definiation: 将标签定义增强后添加到训练集中增加数据量。比如类别1的定义是“用户询问快递时间”，对这个文本做增强。 
+
+工作流程：
+1） 合并训练集和验证集，获得整个数据集的数据；
+2） 通过训练一个分类模型，根据预测的熵找出数据中最有可能标签错误的样本并丢弃；
+3） 对剩余数据，进行数据扩增；将标签定义增强过的数据加入到数据集。
+4） 输出改进过的训练集、验证集：1）拆分；2）写到文件；
 """
 
 # 根据分类模型预测的值，计算熵，并排序

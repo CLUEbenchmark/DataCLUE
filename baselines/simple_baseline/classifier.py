@@ -39,6 +39,7 @@ def get_prediction():
     训练一个模型，得到数据点上的标签预测：
     1） 加载数据；
     2）使用K折交叉验证训练，并在验证集上做预测；
+    3) 合并交叉验证的结果，并得到整个数据集上模型的预测的概率分布
     train a model to get estimation of each data point
     """
     # 1、加载所有数据、标签到列表 all_text, all_label,all_id
@@ -129,7 +130,6 @@ def get_prediction():
             # dev_index[0]:第0折的验证数据的索引的列表
             alls[item-1] = dev_out[kfid][idx]
     outputs = np.array(alls)
-
     return outputs
 
 
