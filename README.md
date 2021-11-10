@@ -137,8 +137,10 @@ TODO 这里是实验分析
 2. 使用数据增强提升数据量，即对输入文本的增强；
 3. 将标签定义增强后添加到训练集中增加数据量。比如类别1的定义是“用户询问快递时间”，对这个文本做增强。 
 ```
-cd baselines/simple_baseline
-python main.py
+环境：python 3.x
+进入到目录：cd baselines/simple_baseline
+首次运行前先安装包：pip install requirements.txt
+运行： python main.py
 ```
 
 ## DataCLUE测评及规则
