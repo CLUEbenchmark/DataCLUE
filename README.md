@@ -125,7 +125,7 @@ TODO 这里是实验分析
            cd ./baselines/models_pytorch/classifier_pytorch
     3、运行对应任务的脚本(GPU方式): 会自动下载模型和任务数据并开始运行。
        bash run_classifier_xxx.sh
-       如运行: bash run_classifier_cic.sh 会开始iflytek任务的训练。
+       如运行: bash run_classifier_cic.sh 会开始cic任务的训练。
        训练完后也会得到在验证集上的效果，见 ./output_dir/bert/checkpoint_eval_results.txt
         运行: bash run_classifier_cic.sh predict 会在测试集上做预测，并且生成预测文件，见: /output_dir/bert/test_prediction.json
  或者：
