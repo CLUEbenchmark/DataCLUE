@@ -34,7 +34,7 @@ DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
     
     2、挑战性高：训练集train、验证集dev，都具有高比例的错误标注的数据。公开测试集标注准确率高（超过95%）。
     
-    3、资源消耗低：实验周期快，计算成本低。GPU环境单次实验3分钟作者；CPU环境也可较短时间完成训练。
+    3、资源消耗低：实验周期快，计算成本低。GPU环境单次实验3分钟完成；CPU环境也可较短时间完成训练。
     
     「开启双周赛和奖励」
     
