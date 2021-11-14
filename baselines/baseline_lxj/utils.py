@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import torch
 from torch import nn
 from torch.utils.data import Dataset
@@ -9,6 +10,15 @@ from transformers import BertTokenizer, BertModel, BertConfig
 from time import time
 import numpy as np
 
+def SeedEverything(seed=1):
+    """Copy from clue"""
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
 
 def LoadData(filepath, left_idx=None):
     

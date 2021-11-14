@@ -1,5 +1,11 @@
 
-from utils import MyDataset, BertForSequenceClassification, collate_fn, Stat
+from utils import (
+    MyDataset,
+    BertForSequenceClassification,
+    collate_fn,
+    Stat,
+    SeedEverything
+)
 import torch
 from torch.utils.data import DataLoader
 from torch.optim import Adam
@@ -35,7 +41,7 @@ def train(model, optimizer, loader, result, epoch, device, log_step, accumulatio
             optimizer.step()
             optimizer.zero_grad()
             # scheduler.step()
-
+        
         for i, index in enumerate(batch['idx']):
             # NOTE, loss, acc, margin
             tmp = result.get(index, [[], [], []])
@@ -68,20 +74,24 @@ def test(model, loader, device):
             _, predict = model(**batch)
 
         acc.extend(predict['acc'])
-
+    
     print(f'test public acc: {sum(acc) / len(acc):2.4f}')
     print('=' * 50)
 
+
 def main():
 
-    filepath = '../../datasets/cic'
-    epochs = 60
+    filepath = '../datasets/cic'
+    epochs = 100
     log_step = 50
     lr = 3e-5
     batch_size = 32
     accumulation_steps = 8
     save_dir = './' # TODO
+    seed = 1
 
+    SeedEverything(seed)
+    
     traindataset = MyDataset(filepath = filepath, mode = 'train', tokenizer = PRETRAIN)
     testdataset = MyDataset(filepath = filepath, mode = 'test', tokenizer = PRETRAIN)
 
@@ -104,14 +114,14 @@ def main():
 
     # NOTE 统计完成后，去除数据重新训练，查看效果
     res = Stat(result)
-    left_idx = res[-2][:1000].tolist()
+    left_idx = res[-2][-1000:].tolist()
     traindataset = MyDataset(filepath = filepath, mode = 'train', tokenizer = PRETRAIN, left_idx = left_idx)
     trainloader = DataLoader(traindataset, batch_size = batch_size, collate_fn = collate_fn)
 
     model = BertForSequenceClassification(PRETRAIN, num_labels=118)
     model.to(device)
     optimizer = Adam(model.parameters(), lr = lr)
-
+    
     for epoch in range(epochs):
         train(model, optimizer, trainloader, result, epoch, device, log_step, accumulation_steps)
         test(model, testloader, device)
