@@ -114,7 +114,7 @@ TODO 这里是实验分析
 
 ## 基线模型及运行
 
-### 一键运行.基线模型与代码 Baseline with codes
+### 本地测评
     使用方式：
     1、克隆项目 
        git clone https://github.com/CLUEbenchmark/DataCLUE.git
@@ -134,17 +134,25 @@ TODO 这里是实验分析
  或者：
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
-### 运行simple_baseline直接生成可提交结果
-主要思路：
-1. 通过训练一个分类模型根据预测的熵找出数据中最有可能标签错误的样本，并丢弃；
-2. 使用数据增强提升数据量，即对输入文本的增强；
-3. 将标签定义增强后添加到训练集中增加数据量。比如标签定义买家抱怨商品了;标签定义增强->买家抱怨商品涨价了。 
+    另外你也可以基于[dckit](dckit)一键完成测评。
+
+## DataCLUE Toolkit (dckit)
+为了方便上手，我们开发了[dckit](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
+
+基于dckit你只需要关注于数据处理部分即可
+```python
+from dckit.utils import read_datasets, random_split_data
+from dckit.eval import evaluate
+
+data = read_datasets()
+# TODO 对数据进行处理
+
+random_split_data(data)
+f1 = evaluate()
 ```
-环境：python 3.x
-进入到目录：cd baselines/simple_baseline
-首次运行前先安装包：pip install requirements.txt
-运行： python main.py
-```
+
+## 基线模型
+我们基于[dckit](dckit)提供了多个[基线模型](baselines)，也欢迎参与贡献你的模型。
 
 ## DataCLUE测评及规则
 ### 1.测评方式：
@@ -195,8 +203,10 @@ TODO 这里是实验分析
     {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
      
 
-## 数据处理方法简介
-TODO 数据处理方法简介
+## DataCLUE Toolkit (dckit)
+为了方便上手，我们开发了[dckit](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
+
+
 
 ## 学习资料
 1、<a href='https://www.bilibili.com/video/av587353739/'>吴恩达新课：从以模型为中心到以数据为中心的AI（1小时）</a>
@@ -207,6 +217,6 @@ TODO 数据处理方法简介
    <img src="./resources/img/bxu.jpg"  width="30%" height="30%" />   
 
    QQ群:836811304
-   
+
 ## 参考资料
 添加中。。。

@@ -7,8 +7,7 @@ from dckit.utils import read_datasets, random_split_data
 from dckit.eval import evaluate
 
 data = read_datasets()
-# TODO 对数据进行处理，处理完的文件存储在对应文件夹下
-
+# TODO 对数据进行处理
 
 random_split_data(data)
 f1 = evaluate()
