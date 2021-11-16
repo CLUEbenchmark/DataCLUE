@@ -1,5 +1,5 @@
 from dckit.utils import read_datasets
-from dckit.eval import evaluate
+from dckit.evaluate import evaluate
 
 
 def template(data):

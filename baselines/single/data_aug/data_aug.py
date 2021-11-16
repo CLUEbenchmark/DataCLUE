@@ -2,7 +2,7 @@ import tqdm
 import json
 from textda.data_expansion import data_expansion
 from dckit.utils import read_datasets, random_split_data
-from dckit.eval import evaluate
+from dckit.evaluate import evaluate
 
 
 def data_aug(data, num_aug=3):
