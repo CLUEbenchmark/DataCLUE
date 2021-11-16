@@ -40,14 +40,15 @@ CTRL_PRETRAINED_MODEL_ARCHIVE_MAP = {"ctrl": "https://storage.googleapis.com/sf-
 
 
 def angle_defn(pos, i, d_model_size):
-    angle_rates = 1 / torch.pow(10000, (2 * (i//2)) / d_model_size)
+    angle_rates = 1 / torch.pow(10000, (2 * (i // 2)) / d_model_size)
     return pos * angle_rates
+
 
 def positional_encoding(position, d_model_size, dtype):
     # create the sinusoidal pattern for the positional encoding
     angle_rads = (angle_defn(torch.arange(position, dtype=dtype).unsqueeze(1),
-                  torch.arange(d_model_size, dtype=dtype).unsqueeze(0),
-                  d_model_size))
+                             torch.arange(d_model_size, dtype=dtype).unsqueeze(0),
+                             d_model_size))
 
     sines = torch.sin(angle_rads[:, 0::2])
     cosines = torch.cos(angle_rads[:, 1::2])
@@ -55,9 +56,10 @@ def positional_encoding(position, d_model_size, dtype):
     pos_encoding = torch.cat([sines, cosines], dim=-1)
     return pos_encoding
 
+
 def scaled_dot_product_attention(q, k, v, mask, attention_mask=None, head_mask=None):
     # calculate attention
-    matmul_qk = torch.matmul(q, k.permute(0,1,3,2))
+    matmul_qk = torch.matmul(q, k.permute(0, 1, 3, 2))
 
     dk = k.shape[-1]
     scaled_attention_logits = matmul_qk / np.sqrt(dk)
@@ -69,7 +71,7 @@ def scaled_dot_product_attention(q, k, v, mask, attention_mask=None, head_mask=N
         # Apply the attention mask
         scaled_attention_logits = scaled_attention_logits + attention_mask
 
-    attention_weights = torch.softmax(scaled_attention_logits, dim=-1) 
+    attention_weights = torch.softmax(scaled_attention_logits, dim=-1)
 
     # Mask heads if we want to
     if head_mask is not None:
@@ -127,7 +129,6 @@ class MultiHeadAttention(torch.nn.Module):
         return outputs
 
 
-
 def point_wise_feed_forward_network(d_model_size, dff):
     return torch.nn.Sequential(torch.nn.Linear(d_model_size, dff),
                                torch.nn.ReLU(),
@@ -150,9 +151,9 @@ class EncoderLayer(torch.nn.Module):
     def forward(self, x, mask, layer_past=None, attention_mask=None, head_mask=None):
         normed = self.layernorm1(x)
         attn_outputs = self.multi_head_attention(normed, normed, normed, mask,
-                                                      layer_past=layer_past,
-                                                      attention_mask=attention_mask,
-                                                      head_mask=head_mask)
+                                                 layer_past=layer_past,
+                                                 attention_mask=attention_mask,
+                                                 head_mask=head_mask)
         attn_output = attn_outputs[0]
         attn_output = self.dropout1(attn_output)
         out1 = x + attn_output
@@ -238,8 +239,9 @@ CTRL_INPUTS_DOCSTRING = r"""    Inputs:
             ``1`` indicates the head is **not masked**, ``0`` indicates the head is **masked**.
 """
 
+
 @add_start_docstrings("The bare CTRL Model transformer outputting raw hidden-states without any specific head on top.",
-                                            CTRL_START_DOCSTRING, CTRL_INPUTS_DOCSTRING)
+                      CTRL_START_DOCSTRING, CTRL_INPUTS_DOCSTRING)
 class CTRLModel(CTRLPreTrainedModel):
     r"""
     Outputs: `Tuple` comprising various elements depending on the configuration (config) and inputs:
@@ -266,6 +268,7 @@ class CTRLModel(CTRLPreTrainedModel):
         last_hidden_states = outputs[0]  # The last hidden-state is the first element of the output tuple
 
     """
+
     def __init__(self, config):
         super(CTRLModel, self).__init__(config)
         self.output_hidden_states = config.output_hidden_states
@@ -300,7 +303,8 @@ class CTRLModel(CTRLPreTrainedModel):
         for layer, heads in heads_to_prune.items():
             self.h[layer].attn.prune_heads(heads)
 
-    def forward(self, input_ids, past=None, attention_mask=None, token_type_ids=None, position_ids=None, head_mask=None):
+    def forward(self, input_ids, past=None, attention_mask=None, token_type_ids=None, position_ids=None,
+                head_mask=None):
         input_shape = input_ids.size()
         input_ids = input_ids.view(-1, input_shape[-1])
         if past is None:
@@ -309,7 +313,8 @@ class CTRLModel(CTRLPreTrainedModel):
         else:
             past_length = past[0][0].size(-2)
         if position_ids is None:
-            position_ids = torch.arange(past_length, input_ids.size(-1) + past_length, dtype=torch.long, device=input_ids.device)
+            position_ids = torch.arange(past_length, input_ids.size(-1) + past_length, dtype=torch.long,
+                                        device=input_ids.device)
             position_ids = position_ids.unsqueeze(0).expand_as(input_ids)
 
         # Attention mask.
@@ -327,7 +332,7 @@ class CTRLModel(CTRLPreTrainedModel):
             # positions we want to attend and -10000.0 for masked positions.
             # Since we are adding it to the raw scores before the softmax, this is
             # effectively the same as removing these entirely.
-            attention_mask = attention_mask.to(dtype=next(self.parameters()).dtype) # fp16 compatibility
+            attention_mask = attention_mask.to(dtype=next(self.parameters()).dtype)  # fp16 compatibility
             attention_mask = (1.0 - attention_mask) * -10000.0
 
         # Prepare head mask if needed
@@ -339,8 +344,10 @@ class CTRLModel(CTRLPreTrainedModel):
                 head_mask = head_mask.unsqueeze(0).unsqueeze(0).unsqueeze(-1).unsqueeze(-1)
                 head_mask = head_mask.expand(self.config.n_layer, -1, -1, -1, -1)
             elif head_mask.dim() == 2:
-                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(-1)  # We can specify head_mask for each layer
-            head_mask = head_mask.to(dtype=next(self.parameters()).dtype) # switch to fload if need + fp16 compatibility
+                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(
+                    -1)  # We can specify head_mask for each layer
+            head_mask = head_mask.to(
+                dtype=next(self.parameters()).dtype)  # switch to fload if need + fp16 compatibility
         else:
             head_mask = [None] * self.config.n_layer
 
@@ -443,6 +450,7 @@ class CTRLLMHeadModel(CTRLPreTrainedModel):
         loss, logits = outputs[:2]
 
     """
+
     def __init__(self, config):
         super(CTRLLMHeadModel, self).__init__(config)
         self.transformer = CTRLModel(config)

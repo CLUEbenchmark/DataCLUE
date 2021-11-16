@@ -216,7 +216,6 @@ class IflytekProcessor(DataProcessor):
         return examples
 
 
-
 class CICProcessor(DataProcessor):
     """Processor for the IFLYTEK data set (CLUE version)."""
 
@@ -254,6 +253,7 @@ class CICProcessor(DataProcessor):
                 InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
 
+
 class AfqmcProcessor(DataProcessor):
     """Processor for the AFQMC data set (CLUE version)."""
 
@@ -288,6 +288,7 @@ class AfqmcProcessor(DataProcessor):
                 InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
 
+
 class OcnliProcessor(DataProcessor):
     """Processor for the CMNLI data set (CLUE version)."""
 
@@ -318,11 +319,12 @@ class OcnliProcessor(DataProcessor):
             text_a = line["sentence1"]
             text_b = line["sentence2"]
             label = str(line["label"]) if set_type != 'test' else 'neutral'
-            if label.strip()=='-':
+            if label.strip() == '-':
                 continue
             examples.append(
                 InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
+
 
 class CmnliProcessor(DataProcessor):
     """Processor for the CMNLI data set (CLUE version)."""
@@ -354,7 +356,7 @@ class CmnliProcessor(DataProcessor):
             text_a = line["sentence1"]
             text_b = line["sentence2"]
             label = str(line["label"]) if set_type != 'test' else 'neutral'
-            if label.strip()=='-':
+            if label.strip() == '-':
                 continue
             examples.append(
                 InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
@@ -551,6 +553,6 @@ clue_output_modes = {
     'csl': "classification",
     'wsc': "classification",
     'copa': "classification",
-    'cic':  "classification",
+    'cic': "classification",
 
 }

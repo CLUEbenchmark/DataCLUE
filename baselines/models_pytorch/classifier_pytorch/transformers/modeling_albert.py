@@ -32,7 +32,7 @@ from .modeling_utils import PreTrainedModel, prune_linear_layer
 from .configuration_bert import BertConfig
 from .file_utils import add_start_docstrings
 from .modeling_bert import (ACT2FN, BertSelfAttention, BertIntermediate,
-                            BertPooler,BertPredictionHeadTransform)
+                            BertPooler, BertPredictionHeadTransform)
 
 logger = logging.getLogger(__name__)
 
@@ -294,6 +294,7 @@ class AlbertEncoder(nn.Module):
         if self.output_attentions:
             outputs = outputs + (all_attentions,)
         return outputs  # last-layer hidden state, (all hidden states), (all attentions)
+
 
 class AlbertLMPredictionHead(nn.Module):
     def __init__(self, config):

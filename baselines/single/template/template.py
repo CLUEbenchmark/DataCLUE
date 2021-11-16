@@ -17,5 +17,6 @@ def main():
     print('Macro-F1=', f1)
     return f1
 
+
 if __name__ == '__main__':
     main()

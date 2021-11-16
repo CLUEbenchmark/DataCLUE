@@ -53,9 +53,10 @@ class AutoConfig(object):
             - contains `ctrl` : CTRLConfig (CTRL model)
         This class cannot be instantiated using `__init__()` (throw an error).
     """
+
     def __init__(self):
         raise EnvironmentError("AutoConfig is designed to be instantiated "
-            "using the `AutoConfig.from_pretrained(pretrained_model_name_or_path)` method.")
+                               "using the `AutoConfig.from_pretrained(pretrained_model_name_or_path)` method.")
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, **kwargs):

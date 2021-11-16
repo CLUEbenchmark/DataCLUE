@@ -23,9 +23,11 @@ from torch.optim.lr_scheduler import LambdaLR
 
 logger = logging.getLogger(__name__)
 
+
 class ConstantLRSchedule(LambdaLR):
     """ Constant learning rate schedule.
     """
+
     def __init__(self, optimizer, last_epoch=-1):
         super(ConstantLRSchedule, self).__init__(optimizer, lambda _: 1.0, last_epoch=last_epoch)
 
@@ -35,6 +37,7 @@ class WarmupConstantSchedule(LambdaLR):
         Linearly increases learning rate schedule from 0 to 1 over `warmup_steps` training steps.
         Keeps learning rate schedule equal to 1. after warmup_steps.
     """
+
     def __init__(self, optimizer, warmup_steps, last_epoch=-1):
         self.warmup_steps = warmup_steps
         super(WarmupConstantSchedule, self).__init__(optimizer, self.lr_lambda, last_epoch=last_epoch)
@@ -50,6 +53,7 @@ class WarmupLinearSchedule(LambdaLR):
         Linearly increases learning rate from 0 to 1 over `warmup_steps` training steps.
         Linearly decreases learning rate from 1. to 0. over remaining `t_total - warmup_steps` steps.
     """
+
     def __init__(self, optimizer, warmup_steps, t_total, last_epoch=-1):
         self.warmup_steps = warmup_steps
         self.t_total = t_total
@@ -67,6 +71,7 @@ class WarmupCosineSchedule(LambdaLR):
         Decreases learning rate from 1. to 0. over remaining `t_total - warmup_steps` steps following a cosine curve.
         If `cycles` (default=0.5) is different from default, learning rate follows cosine function after warmup.
     """
+
     def __init__(self, optimizer, warmup_steps, t_total, cycles=.5, last_epoch=-1):
         self.warmup_steps = warmup_steps
         self.t_total = t_total
@@ -87,6 +92,7 @@ class WarmupCosineWithHardRestartsSchedule(LambdaLR):
         If `cycles` (default=1.) is different from default, learning rate follows `cycles` times a cosine decaying
         learning rate (with hard restarts).
     """
+
     def __init__(self, optimizer, warmup_steps, t_total, cycles=1., last_epoch=-1):
         self.warmup_steps = warmup_steps
         self.t_total = t_total
@@ -103,7 +109,6 @@ class WarmupCosineWithHardRestartsSchedule(LambdaLR):
         return max(0.0, 0.5 * (1. + math.cos(math.pi * ((float(self.cycles) * progress) % 1.0))))
 
 
-
 class AdamW(Optimizer):
     """ Implements Adam algorithm with weight decay fix.
 
@@ -114,12 +119,13 @@ class AdamW(Optimizer):
         weight_decay (float): Weight decay. Default: 0.0
         correct_bias (bool): can be set to False to avoid correcting bias in Adam (e.g. like in Bert TF repository). Default True.
     """
+
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-6, weight_decay=0.0, correct_bias=True):
         if lr < 0.0:
             raise ValueError("Invalid learning rate: {} - should be >= 0.0".format(lr))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError("Invalid beta parameter: {} - should be in [0.0, 1.0[".format(betas[0]))
-        if not 0.0 <= betas[1]  < 1.0:
+        if not 0.0 <= betas[1] < 1.0:
             raise ValueError("Invalid beta parameter: {} - should be in [0.0, 1.0[".format(betas[1]))
         if not 0.0 <= eps:
             raise ValueError("Invalid epsilon value: {} - should be >= 0.0".format(eps))

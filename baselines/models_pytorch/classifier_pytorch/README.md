@@ -36,6 +36,7 @@
 ├── run_classifier_tnews.sh   #　任务运行脚本
 ├── download_clue_data.py   # 数据集下载
 ```
+
 ### 依赖模块
 
 - pytorch=1.1.0
@@ -48,9 +49,11 @@
 ### 运行方式
 
 **1. 下载CLUE数据集，运行以下命令：**
+
 ```python
 python download_clue_data.py --data_dir=./CLUEdatasets --tasks=all
 ```
+
 上述命令默认下载全CLUE数据集，你也可以指定`--tasks`进行下载对应任务数据集，默认存在在`./CLUEdatasets/{对应task}`目录下。
 
 **2. 若下载对应tf模型权重(若下载为pytorch权重，则跳过该步)，运行转换脚本，比如转换`albert_base_tf`:**
@@ -61,6 +64,7 @@ python convert_albert_original_tf_checkpoint_to_pytorch.py \
       --bert_config_file=./prev_trained_model/albert_base_tf/albert_config_base.json \
       --pytorch_dump_path=./prev_trained_model/albert_base/pytorch_model.bin
 ```
+
 **注意**: 当转换完模型(包括下载的pytorch模型权重)之后，需要在对应的文件夹内存放`config.json`和`vocab.txt`文件，比如：
 
 ```text
@@ -71,14 +75,17 @@ python convert_albert_original_tf_checkpoint_to_pytorch.py \
 |  | └── pytorch_model.bin
 
 ```
+
 **3. 直接运行对应任务sh脚本，如：**
 
 ```shell
 sh run_classifier_tnews.sh
 ```
+
 **4. 评估**
 
 当前默认使用最后一个checkpoint模型作为评估模型，你也可以指定`--predict_checkpoints`参数进行对应的checkpoint进行评估，比如：
+
 ```python
 CURRENT_DIR=`pwd`
 export BERT_BASE_DIR=$CURRENT_DIR/prev_trained_model/bert-base
@@ -120,6 +127,7 @@ MODEL_CLASSES = {
     'albert': (BertConfig, AlbertForSequenceClassification, BertTokenizer)
 }
 ```
+
 **注意**: bert ernie bert_wwm bert_wwwm_ext等模型只是权重不一样，而模型本身主体一样，因此参数`model_type=bert`其余同理。
 
 ### 结果

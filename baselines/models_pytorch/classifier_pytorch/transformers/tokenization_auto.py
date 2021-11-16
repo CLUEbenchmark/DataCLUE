@@ -30,6 +30,7 @@ from .tokenization_distilbert import DistilBertTokenizer
 
 logger = logging.getLogger(__name__)
 
+
 class AutoTokenizer(object):
     r""":class:`~transformers.AutoTokenizer` is a generic tokenizer class
         that will be instantiated as one of the tokenizer classes of the library
@@ -53,9 +54,10 @@ class AutoTokenizer(object):
 
         This class cannot be instantiated using `__init__()` (throw an error).
     """
+
     def __init__(self):
         raise EnvironmentError("AutoTokenizer is designed to be instantiated "
-            "using the `AutoTokenizer.from_pretrained(pretrained_model_name_or_path)` method.")
+                               "using the `AutoTokenizer.from_pretrained(pretrained_model_name_or_path)` method.")
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *inputs, **kwargs):

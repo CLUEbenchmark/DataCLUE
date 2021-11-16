@@ -34,18 +34,19 @@ VOCAB_FILES_NAMES = {
 
 PRETRAINED_VOCAB_FILES_MAP = {
     'vocab_file':
-    {
-        'openai-gpt': "https://s3.amazonaws.com/models.huggingface.co/bert/openai-gpt-vocab.json",
-    },
+        {
+            'openai-gpt': "https://s3.amazonaws.com/models.huggingface.co/bert/openai-gpt-vocab.json",
+        },
     'merges_file':
-    {
-        'openai-gpt': "https://s3.amazonaws.com/models.huggingface.co/bert/openai-gpt-merges.txt",
-    },
+        {
+            'openai-gpt': "https://s3.amazonaws.com/models.huggingface.co/bert/openai-gpt-merges.txt",
+        },
 }
 
 PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
     'openai-gpt': 512,
 }
+
 
 def get_pairs(word):
     """
@@ -58,6 +59,7 @@ def get_pairs(word):
         pairs.add((prev_char, char))
         prev_char = char
     return pairs
+
 
 def text_standardize(text):
     """
@@ -74,6 +76,7 @@ def text_standardize(text):
     text = re.sub(r'[^\S\n]+', ' ', text)
     return text.strip()
 
+
 class OpenAIGPTTokenizer(PreTrainedTokenizer):
     """
     BPE tokenizer. Peculiarities:
@@ -87,8 +90,8 @@ class OpenAIGPTTokenizer(PreTrainedTokenizer):
     def __init__(self, vocab_file, merges_file, unk_token="<unk>", **kwargs):
         super(OpenAIGPTTokenizer, self).__init__(unk_token=unk_token, **kwargs)
 
-        self.max_len_single_sentence = self.max_len # no default special tokens - you can update this value if you add special tokens
-        self.max_len_sentences_pair = self.max_len # no default special tokens - you can update this value if you add special tokens
+        self.max_len_single_sentence = self.max_len  # no default special tokens - you can update this value if you add special tokens
+        self.max_len_sentences_pair = self.max_len  # no default special tokens - you can update this value if you add special tokens
 
         try:
             import ftfy
@@ -102,7 +105,7 @@ class OpenAIGPTTokenizer(PreTrainedTokenizer):
             self.fix_text = None
 
         self.encoder = json.load(open(vocab_file, encoding="utf-8"))
-        self.decoder = {v:k for k,v in self.encoder.items()}
+        self.decoder = {v: k for k, v in self.encoder.items()}
         merges = open(merges_file, encoding='utf-8').read().split('\n')[1:-1]
         merges = [tuple(merge.split()) for merge in merges]
         self.bpe_ranks = dict(zip(merges, range(len(merges))))
@@ -119,7 +122,7 @@ class OpenAIGPTTokenizer(PreTrainedTokenizer):
         pairs = get_pairs(word)
 
         if not pairs:
-            return token+'</w>'
+            return token + '</w>'
 
         while True:
             bigram = min(pairs, key=lambda pair: self.bpe_ranks.get(pair, float('inf')))
@@ -137,8 +140,8 @@ class OpenAIGPTTokenizer(PreTrainedTokenizer):
                     new_word.extend(word[i:])
                     break
 
-                if word[i] == first and i < len(word)-1 and word[i+1] == second:
-                    new_word.append(first+second)
+                if word[i] == first and i < len(word) - 1 and word[i + 1] == second:
+                    new_word.append(first + second)
                     i += 2
                 else:
                     new_word.append(word[i])

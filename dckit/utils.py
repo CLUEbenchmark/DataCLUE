@@ -18,13 +18,13 @@ def read_datasets(dataset='CIC'):
                     - 'info': 标签号好描述的对应关系，如{79:'买家咨询商品规格数量'}
     """
     if dataset == 'CIC':
-        json_data = [] 
+        json_data = []
         for data_type in ['train', 'dev']:
             for line in open('{}/datasets/raw_cic/{}.json'.format(path, data_type), 'r', encoding='utf-8'):
                 # line = {"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
                 one = json.loads(line)
                 json_data.append(one)
-        
+
         label_info = {}
         with open('{}/datasets/raw_cic/labels.txt'.format(path), 'r', encoding='utf-8') as fa:
             for idx, line in enumerate(fa.readlines()):
@@ -35,22 +35,22 @@ def read_datasets(dataset='CIC'):
         raise NotImplementedError
 
 
-def random_split_data(data, test_size=2000):
+def random_split_data(data, test_size=2000, seed=42):
     json_data = data['json']
     labels = []
     for line in json_data:
         line.append(int(line['label']))
-    train_idx, test_idx, _, _ = train_test_split(
-        range(len(labels)), labels, stratify=labels, shuffle=True, test_size=test_size)
+    train_idx, test_idx, _, _ = train_test_split(range(len(labels)), labels, stratify=labels,
+                                                 shuffle=True, test_size=test_size, random_state=seed)
 
     f = open('{}/datasets/cic/train.json'.format(path), 'w', encoding='utf-8')
     for idx in train_idx:
         dic = json_data[idx]
         str_sen = json.dumps(dic, ensure_ascii=False)
-        f.write(str_sen+'\n')
+        f.write(str_sen + '\n')
 
     f = open('{}/datasets/cic/dev.json'.format(path), 'w', encoding='utf-8')
     for idx in test_idx:
         dic = json_data[idx]
         str_sen = json.dumps(dic, ensure_ascii=False)
-        f.write(str_sen+'\n')
+        f.write(str_sen + '\n')

@@ -6,12 +6,13 @@ import numpy as np
 path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
 # print(path)
 cmds = [
-    'rm -r {}/output_dir/bert'.format(path), 
+    'rm -r {}/output_dir/bert'.format(path),
     'rm {}/datasets/cic/cached*'.format(path),
     'cd {}/baselines/models_pytorch/classifier_pytorch'.format(path),
     'bash run_classifier_cic.sh',
     'bash run_classifier_cic.sh predict',
 ]
+
 
 def calc_f1():
     y_true = []

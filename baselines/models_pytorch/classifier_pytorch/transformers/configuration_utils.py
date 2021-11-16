@@ -28,6 +28,7 @@ from .file_utils import cached_path, CONFIG_NAME
 
 logger = logging.getLogger(__name__)
 
+
 class PretrainedConfig(object):
     r""" Base class for all configuration classes.
         Handles a few parameters common to all models' configurations as well as methods for loading/downloading/saving configurations.
@@ -62,7 +63,8 @@ class PretrainedConfig(object):
         """ Save a configuration object to the directory `save_directory`, so that it
             can be re-loaded using the :func:`~transformers.PretrainedConfig.from_pretrained` class method.
         """
-        assert os.path.isdir(save_directory), "Saving path should be a directory where the model and configuration can be saved"
+        assert os.path.isdir(
+            save_directory), "Saving path should be a directory where the model and configuration can be saved"
 
         # If we save using the predefined names, we can load using `from_pretrained`
         output_config_file = os.path.join(save_directory, CONFIG_NAME)
@@ -130,18 +132,19 @@ class PretrainedConfig(object):
             config_file = pretrained_model_name_or_path
         # redirect to the cache, if necessary
         try:
-            resolved_config_file = cached_path(config_file, cache_dir=cache_dir, force_download=force_download, proxies=proxies)
+            resolved_config_file = cached_path(config_file, cache_dir=cache_dir, force_download=force_download,
+                                               proxies=proxies)
         except EnvironmentError:
             if pretrained_model_name_or_path in cls.pretrained_config_archive_map:
                 msg = "Couldn't reach server at '{}' to download pretrained model configuration file.".format(
-                        config_file)
+                    config_file)
             else:
                 msg = "Model name '{}' was not found in model name list ({}). " \
                       "We assumed '{}' was a path or url to a configuration file named {} or " \
                       "a directory containing such a file but couldn't find any such file at this path or url.".format(
-                        pretrained_model_name_or_path,
-                        ', '.join(cls.pretrained_config_archive_map.keys()),
-                        config_file, CONFIG_NAME)
+                    pretrained_model_name_or_path,
+                    ', '.join(cls.pretrained_config_archive_map.keys()),
+                    config_file, CONFIG_NAME)
             raise EnvironmentError(msg)
 
         if resolved_config_file == config_file:

@@ -1,4 +1,4 @@
-import tqdm
+from tqdm import tqdm
 import json
 from textda.data_expansion import data_expansion
 from dckit.utils import read_datasets, random_split_data
@@ -26,6 +26,7 @@ def main():
     random_split_data(data)
     f1 = evaluate()
     return f1
+
 
 if __name__ == '__main__':
     main()

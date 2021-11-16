@@ -31,10 +31,10 @@ VOCAB_FILES_NAMES = {'vocab_file': 'spiece.model'}
 
 PRETRAINED_VOCAB_FILES_MAP = {
     'vocab_file':
-    {
-    'xlnet-base-cased': "https://s3.amazonaws.com/models.huggingface.co/bert/xlnet-base-cased-spiece.model",
-    'xlnet-large-cased': "https://s3.amazonaws.com/models.huggingface.co/bert/xlnet-large-cased-spiece.model",
-    }
+        {
+            'xlnet-base-cased': "https://s3.amazonaws.com/models.huggingface.co/bert/xlnet-base-cased-spiece.model",
+            'xlnet-large-cased': "https://s3.amazonaws.com/models.huggingface.co/bert/xlnet-large-cased-spiece.model",
+        }
 }
 
 PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
@@ -45,11 +45,12 @@ PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
 SPIECE_UNDERLINE = u'▁'
 
 # Segments (not really needed)
-SEG_ID_A   = 0
-SEG_ID_B   = 1
+SEG_ID_A = 0
+SEG_ID_B = 1
 SEG_ID_CLS = 2
 SEG_ID_SEP = 3
 SEG_ID_PAD = 4
+
 
 class XLNetTokenizer(PreTrainedTokenizer):
     """
@@ -78,8 +79,9 @@ class XLNetTokenizer(PreTrainedTokenizer):
         try:
             import sentencepiece as spm
         except ImportError:
-            logger.warning("You need to install SentencePiece to use XLNetTokenizer: https://github.com/google/sentencepiece"
-                           "pip install sentencepiece")
+            logger.warning(
+                "You need to install SentencePiece to use XLNetTokenizer: https://github.com/google/sentencepiece"
+                "pip install sentencepiece")
 
         self.do_lower_case = do_lower_case
         self.remove_space = remove_space
@@ -103,8 +105,9 @@ class XLNetTokenizer(PreTrainedTokenizer):
         try:
             import sentencepiece as spm
         except ImportError:
-            logger.warning("You need to install SentencePiece to use XLNetTokenizer: https://github.com/google/sentencepiece"
-                           "pip install sentencepiece")
+            logger.warning(
+                "You need to install SentencePiece to use XLNetTokenizer: https://github.com/google/sentencepiece"
+                "pip install sentencepiece")
         self.sp_model = spm.SentencePieceProcessor()
         self.sp_model.Load(self.vocab_file)
 

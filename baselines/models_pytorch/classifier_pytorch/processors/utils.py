@@ -3,6 +3,7 @@ import sys
 import copy
 import json
 
+
 class InputExample(object):
     """
     A single training/test example for simple sequence classification.
@@ -16,6 +17,7 @@ class InputExample(object):
         label: (Optional) string. The label of the example. This should be
         specified for train and dev examples, but not for test examples.
     """
+
     def __init__(self, guid, text_a, text_b=None, label=None):
         self.guid = guid
         self.text_a = text_a
@@ -48,7 +50,7 @@ class InputFeatures(object):
         label: Label corresponding to the input
     """
 
-    def __init__(self, input_ids, attention_mask, token_type_ids, label,input_len):
+    def __init__(self, input_ids, attention_mask, token_type_ids, label, input_len):
         self.input_ids = input_ids
         self.attention_mask = attention_mask
         self.token_type_ids = token_type_ids

@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 try:
     import tensorflow as tf
+
     assert hasattr(tf, '__version__') and int(tf.__version__[0]) >= 2
     _tf_available = True  # pylint: disable=invalid-name
     logger.info("TensorFlow version {} available.".format(tf.__version__))
@@ -35,14 +36,15 @@ except (ImportError, AssertionError):
 
 try:
     import torch
+
     _torch_available = True  # pylint: disable=invalid-name
     logger.info("PyTorch version {} available.".format(torch.__version__))
 except ImportError:
     _torch_available = False  # pylint: disable=invalid-name
 
-
 try:
     from torch.hub import _get_torch_home
+
     torch_cache_home = _get_torch_home()
 except ImportError:
     torch_cache_home = os.path.expanduser(
@@ -57,6 +59,7 @@ except ImportError:
 
 try:
     from pathlib import Path
+
     PYTORCH_PRETRAINED_BERT_CACHE = Path(
         os.getenv('PYTORCH_TRANSFORMERS_CACHE', os.getenv('PYTORCH_PRETRAINED_BERT_CACHE', default_cache_path)))
 except (AttributeError, ImportError):
@@ -72,35 +75,45 @@ TF2_WEIGHTS_NAME = 'tf_model.h5'
 TF_WEIGHTS_NAME = 'model.ckpt'
 CONFIG_NAME = "config.json"
 
+
 def is_torch_available():
     return _torch_available
 
+
 def is_tf_available():
     return _tf_available
+
 
 if not six.PY2:
     def add_start_docstrings(*docstr):
         def docstring_decorator(fn):
             fn.__doc__ = ''.join(docstr) + fn.__doc__
             return fn
+
         return docstring_decorator
+
 
     def add_end_docstrings(*docstr):
         def docstring_decorator(fn):
             fn.__doc__ = fn.__doc__ + ''.join(docstr)
             return fn
+
         return docstring_decorator
 else:
     # Not possible to update class docstrings on python2
     def add_start_docstrings(*docstr):
         def docstring_decorator(fn):
             return fn
+
         return docstring_decorator
+
 
     def add_end_docstrings(*docstr):
         def docstring_decorator(fn):
             return fn
+
         return docstring_decorator
+
 
 def url_to_filename(url, etag=None):
     """
@@ -240,7 +253,7 @@ def http_get(url, temp_file, proxies=None):
     total = int(content_length) if content_length is not None else None
     progress = tqdm(unit="B", total=total)
     for chunk in req.iter_content(chunk_size=1024):
-        if chunk: # filter out keep-alive new chunks
+        if chunk:  # filter out keep-alive new chunks
             progress.update(len(chunk))
             temp_file.write(chunk)
     progress.close()
