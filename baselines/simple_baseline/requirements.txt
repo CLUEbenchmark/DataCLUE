@@ -1,7 +1,0 @@
-textda==0.1.0.6
-scikit-learn==0.24.2
-tqdm==4.62.3
-scipy==1.5.4
-datasets==1.14.0
-transformers==4.4.0
-torch==1.10.0
