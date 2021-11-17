@@ -1,6 +1,4 @@
-# DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
-
-Data Centic AI Competition of Chinese Natural Language Processing
+# DataCLUE: A Benchmark Suite for Data-centric NLP
 
 You can get the Chinese Version at [README.md](./README.md)
 

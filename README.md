@@ -1,10 +1,10 @@
-# DataCLUE
+# DataCLUE: A Benchmark Suite for Data-centric NLP
 
 **You can get the english version of [README](./README_en.md).**
 
 以数据为中心的AI测评(DataCLUE)
 
-DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
+
 
 ## 内容导引
 | 章节 | 描述 |
