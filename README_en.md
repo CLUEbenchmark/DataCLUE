@@ -2,7 +2,7 @@
 
 Data Centic AI Competition of Chinese Natural Language Processing
 
-You can get the Chinese Version at [README_cn.md](./README_cn.md)
+You can get the Chinese Version at [README.md](./README.md)
 
 ## Table of Content
 
