@@ -1,9 +1,8 @@
-# DataCLUE: A Benchmark Suite for Data-centric NLP
+# <a href='https://arxiv.org/abs/2111.08647'>DataCLUE: A Benchmark Suite for Data-centric NLP</a>
 
 **You can get the english version of [README](./README_en.md).**
 
-以数据为中心的AI测评(DataCLUE)
-
+# <a href='DataCLUE介绍文章.中文版'>https://docs.qq.com/doc/p/51a1f46f64a72bc2ac0633427dc59d6e8d1b8d0a?dver=2.1.27277463</a>
 
 
 ## 内容导引
@@ -39,16 +38,6 @@
     2、挑战性高：训练集train、验证集dev，都具有高比例的错误标注的数据。公开测试集标注准确率高（超过95%）。
     
     3、资源消耗低：实验周期快，计算成本低。GPU环境单次实验3分钟完成；CPU环境也可较短时间完成训练。
-    
-    「开启双周赛和奖励」
-    
-    1、产生办法：每个月1号～15日、16号～30日为两个周赛期。15日、30日晚上9点为双周赛冠军产生时间。冠军从赛期中新提交队伍的最高分中产生。
-    
-    2、奖励：
-    
-    1）证书：可在CLUE官网在线访问的「双周赛冠军证书」；
-    
-    2）奖金：600元双周赛冠军现金奖励。
 
 
 ## 简介
@@ -70,9 +59,9 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 参与测评者需提交修改后的训练集和验证的压缩包。
 
 ## 任务描述和统计
-| Corpus   | Train     | Dev  |Test | Label Defintion  | Test_public(High Quality Data) | Data & Model Analysis Report  |
-| :----:| :----:  |:----:  |:----:  |:----:  |:----:  |:----:  |
-|   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | Stage 1 & 2 |
+| Corpus   | Train     | Dev  |Test | Label Defintion  | Test_public(High Quality Data)   |
+| :----:| :----:  |:----:  |:----:  |:----:  |:----:  |
+|   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | 
 
     Train/Dev: 含有噪声的数据，都含有一定比例有标注错误的标签；
     Test_public：高质量数据（标注准确率95%或以上），用于评估改进数据集算法的最新效果，不能用于模型训练。
@@ -241,4 +230,3 @@ TODO 数据处理方法简介
       primaryClass={cs.CL}
 }
 ```
-。
