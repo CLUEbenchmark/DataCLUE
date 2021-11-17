@@ -30,7 +30,6 @@ TRANSFO_XL_PRETRAINED_CONFIG_ARCHIVE_MAP = {
     'transfo-xl-wt103': "https://s3.amazonaws.com/models.huggingface.co/bert/transfo-xl-wt103-config.json",
 }
 
-
 class TransfoXLConfig(PretrainedConfig):
     """Configuration class to store the configuration of a `TransfoXLModel`.
 
@@ -135,7 +134,7 @@ class TransfoXLConfig(PretrainedConfig):
         self.layer_norm_epsilon = layer_norm_epsilon
 
         if isinstance(vocab_size_or_config_json_file, str) or (sys.version_info[0] == 2
-                                                               and isinstance(vocab_size_or_config_json_file, unicode)):
+                        and isinstance(vocab_size_or_config_json_file, unicode)):
             with open(vocab_size_or_config_json_file, "r", encoding='utf-8') as reader:
                 json_config = json.loads(reader.read())
             for key, value in json_config.items():

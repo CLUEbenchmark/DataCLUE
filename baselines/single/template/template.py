@@ -1,4 +1,4 @@
-from dckit.utils import read_datasets
+from dckit import read_datasets
 from dckit.evaluate import evaluate
 
 

@@ -26,8 +26,7 @@ from .modeling_transfo_xl import TransfoXLModel, TransfoXLLMHeadModel
 from .modeling_xlnet import XLNetModel, XLNetLMHeadModel, XLNetForSequenceClassification, XLNetForQuestionAnswering
 from .modeling_xlm import XLMModel, XLMWithLMHeadModel, XLMForSequenceClassification, XLMForQuestionAnswering
 from .modeling_roberta import RobertaModel, RobertaForMaskedLM, RobertaForSequenceClassification
-from .modeling_distilbert import DistilBertModel, DistilBertForQuestionAnswering, DistilBertForMaskedLM, \
-    DistilBertForSequenceClassification
+from .modeling_distilbert import DistilBertModel, DistilBertForQuestionAnswering, DistilBertForMaskedLM, DistilBertForSequenceClassification
 
 from .modeling_utils import PreTrainedModel, SequenceSummary
 
@@ -60,10 +59,9 @@ class AutoModel(object):
 
         This class cannot be instantiated using `__init__()` (throws an error).
     """
-
     def __init__(self):
         raise EnvironmentError("AutoModel is designed to be instantiated "
-                               "using the `AutoModel.from_pretrained(pretrained_model_name_or_path)` method.")
+            "using the `AutoModel.from_pretrained(pretrained_model_name_or_path)` method.")
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *model_args, **kwargs):
@@ -185,10 +183,9 @@ class AutoModelWithLMHead(object):
 
         This class cannot be instantiated using `__init__()` (throws an error).
     """
-
     def __init__(self):
         raise EnvironmentError("AutoModelWithLMHead is designed to be instantiated "
-                               "using the `AutoModelWithLMHead.from_pretrained(pretrained_model_name_or_path)` method.")
+            "using the `AutoModelWithLMHead.from_pretrained(pretrained_model_name_or_path)` method.")
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *model_args, **kwargs):
@@ -308,10 +305,9 @@ class AutoModelForSequenceClassification(object):
 
         This class cannot be instantiated using `__init__()` (throws an error).
     """
-
     def __init__(self):
         raise EnvironmentError("AutoModelWithLMHead is designed to be instantiated "
-                               "using the `AutoModelWithLMHead.from_pretrained(pretrained_model_name_or_path)` method.")
+            "using the `AutoModelWithLMHead.from_pretrained(pretrained_model_name_or_path)` method.")
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *model_args, **kwargs):
@@ -386,11 +382,9 @@ class AutoModelForSequenceClassification(object):
 
         """
         if 'distilbert' in pretrained_model_name_or_path:
-            return DistilBertForSequenceClassification.from_pretrained(pretrained_model_name_or_path, *model_args,
-                                                                       **kwargs)
+            return DistilBertForSequenceClassification.from_pretrained(pretrained_model_name_or_path, *model_args, **kwargs)
         elif 'roberta' in pretrained_model_name_or_path:
-            return RobertaForSequenceClassification.from_pretrained(pretrained_model_name_or_path, *model_args,
-                                                                    **kwargs)
+            return RobertaForSequenceClassification.from_pretrained(pretrained_model_name_or_path, *model_args, **kwargs)
         elif 'bert' in pretrained_model_name_or_path:
             return BertForSequenceClassification.from_pretrained(pretrained_model_name_or_path, *model_args, **kwargs)
         elif 'xlnet' in pretrained_model_name_or_path:
@@ -421,10 +415,9 @@ class AutoModelForQuestionAnswering(object):
 
         This class cannot be instantiated using `__init__()` (throws an error).
     """
-
     def __init__(self):
         raise EnvironmentError("AutoModelWithLMHead is designed to be instantiated "
-                               "using the `AutoModelWithLMHead.from_pretrained(pretrained_model_name_or_path)` method.")
+            "using the `AutoModelWithLMHead.from_pretrained(pretrained_model_name_or_path)` method.")
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *model_args, **kwargs):

@@ -33,19 +33,18 @@ VOCAB_FILES_NAMES = {
 
 PRETRAINED_VOCAB_FILES_MAP = {
     'vocab_file':
-        {
-            'ctrl': "https://raw.githubusercontent.com/salesforce/ctrl/master/ctrl-vocab.json",
-        },
+    {
+        'ctrl': "https://raw.githubusercontent.com/salesforce/ctrl/master/ctrl-vocab.json",
+    },
     'merges_file':
-        {
-            'ctrl': "https://raw.githubusercontent.com/salesforce/ctrl/master/ctrl-merges.txt",
-        },
+    {
+        'ctrl': "https://raw.githubusercontent.com/salesforce/ctrl/master/ctrl-merges.txt",
+    },
 }
 
 PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
     'ctrl': 256,
 }
-
 
 def get_pairs(word):
     """Return set of symbol pairs in a word.
@@ -60,7 +59,6 @@ def get_pairs(word):
 
     pairs = set(pairs)
     return pairs
-
 
 class CTRLTokenizer(PreTrainedTokenizer):
     """
@@ -77,11 +75,11 @@ class CTRLTokenizer(PreTrainedTokenizer):
 
     def __init__(self, vocab_file, merges_file, unk_token="<unk>", **kwargs):
         super(CTRLTokenizer, self).__init__(unk_token=unk_token, **kwargs)
-        self.max_len_single_sentence = self.max_len  # no default special tokens - you can update this value if you add special tokens
-        self.max_len_sentences_pair = self.max_len  # no default special tokens - you can update this value if you add special tokens
+        self.max_len_single_sentence = self.max_len # no default special tokens - you can update this value if you add special tokens
+        self.max_len_sentences_pair = self.max_len # no default special tokens - you can update this value if you add special tokens
 
         self.encoder = json.load(open(vocab_file, encoding="utf-8"))
-        self.decoder = {v: k for k, v in self.encoder.items()}
+        self.decoder = {v:k for k,v in self.encoder.items()}
         merges = open(merges_file, encoding='utf-8').read().split('\n')[1:-1]
         merges = [tuple(merge.split()) for merge in merges]
         self.bpe_ranks = dict(zip(merges, range(len(merges))))
@@ -95,14 +93,14 @@ class CTRLTokenizer(PreTrainedTokenizer):
         if token in self.cache:
             return self.cache[token]
         word = tuple(token)
-        word = tuple(list(word[:-1]) + [word[-1] + '</w>'])
+        word = tuple(list(word[:-1]) + [word[-1]+'</w>'])
         pairs = get_pairs(word)
 
         if not pairs:
             return token
 
         while True:
-            bigram = min(pairs, key=lambda pair: self.bpe_ranks.get(pair, float('inf')))
+            bigram = min(pairs, key = lambda pair: self.bpe_ranks.get(pair, float('inf')))
             if bigram not in self.bpe_ranks:
                 break
             first, second = bigram
@@ -117,8 +115,8 @@ class CTRLTokenizer(PreTrainedTokenizer):
                     new_word.extend(word[i:])
                     break
 
-                if word[i] == first and i < len(word) - 1 and word[i + 1] == second:
-                    new_word.append(first + second)
+                if word[i] == first and i < len(word)-1 and word[i+1] == second:
+                    new_word.append(first+second)
                     i += 2
                 else:
                     new_word.append(word[i])

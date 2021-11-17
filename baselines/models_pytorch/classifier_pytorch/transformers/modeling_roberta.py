@@ -36,12 +36,10 @@ ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP = {
     'roberta-large-mnli': "https://s3.amazonaws.com/models.huggingface.co/bert/roberta-large-mnli-pytorch_model.bin",
 }
 
-
 class RobertaEmbeddings(BertEmbeddings):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
     """
-
     def __init__(self, config):
         super(RobertaEmbeddings, self).__init__(config)
         self.padding_idx = 1
@@ -54,8 +52,7 @@ class RobertaEmbeddings(BertEmbeddings):
         if position_ids is None:
             # Position numbers begin at padding_idx+1. Padding symbols are ignored.
             # cf. fairseq's `utils.make_positions`
-            position_ids = torch.arange(self.padding_idx + 1, seq_length + self.padding_idx + 1, dtype=torch.long,
-                                        device=input_ids.device)
+            position_ids = torch.arange(self.padding_idx+1, seq_length+self.padding_idx+1, dtype=torch.long, device=input_ids.device)
             position_ids = position_ids.unsqueeze(0).expand_as(input_ids)
         return super(RobertaEmbeddings, self).forward(input_ids,
                                                       token_type_ids=token_type_ids,
@@ -130,10 +127,8 @@ ROBERTA_INPUTS_DOCSTRING = r"""
             ``1`` indicates the head is **not masked**, ``0`` indicates the head is **masked**.
 """
 
-
-@add_start_docstrings(
-    "The bare RoBERTa Model transformer outputting raw hidden-states without any specific head on top.",
-    ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
+@add_start_docstrings("The bare RoBERTa Model transformer outputting raw hidden-states without any specific head on top.",
+                      ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
 class RobertaModel(BertModel):
     r"""
     Outputs: `Tuple` comprising various elements depending on the configuration (config) and inputs:
@@ -187,7 +182,7 @@ class RobertaModel(BertModel):
 
 
 @add_start_docstrings("""RoBERTa Model with a `language modeling` head on top. """,
-                      ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
+    ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
 class RobertaForMaskedLM(BertPreTrainedModel):
     r"""
         **masked_lm_labels**: (`optional`) ``torch.LongTensor`` of shape ``(batch_size, sequence_length)``:
@@ -281,7 +276,7 @@ class RobertaLMHead(nn.Module):
 
 @add_start_docstrings("""RoBERTa Model transformer with a sequence classification/regression head on top (a linear layer 
     on top of the pooled output) e.g. for GLUE tasks. """,
-                      ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
+    ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
 class RobertaForSequenceClassification(BertPreTrainedModel):
     r"""
         **labels**: (`optional`) ``torch.LongTensor`` of shape ``(batch_size,)``:
@@ -323,7 +318,7 @@ class RobertaForSequenceClassification(BertPreTrainedModel):
 
         self.roberta = RobertaModel(config)
         self.classifier = RobertaClassificationHead(config)
-
+    
     def forward(self, input_ids, attention_mask=None, token_type_ids=None, position_ids=None, head_mask=None,
                 labels=None):
         outputs = self.roberta(input_ids,
@@ -347,10 +342,9 @@ class RobertaForSequenceClassification(BertPreTrainedModel):
 
         return outputs  # (loss), logits, (hidden_states), (attentions)
 
-
 @add_start_docstrings("""Roberta Model with a multiple choice classification head on top (a linear layer on top of
     the pooled output and a softmax) e.g. for RocStories/SWAG tasks. """,
-                      ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
+    ROBERTA_START_DOCSTRING, ROBERTA_INPUTS_DOCSTRING)
 class RobertaForMultipleChoice(BertPreTrainedModel):
     r"""
     Inputs:
@@ -439,7 +433,7 @@ class RobertaForMultipleChoice(BertPreTrainedModel):
         flat_token_type_ids = token_type_ids.view(-1, token_type_ids.size(-1)) if token_type_ids is not None else None
         flat_attention_mask = attention_mask.view(-1, attention_mask.size(-1)) if attention_mask is not None else None
         outputs = self.roberta(flat_input_ids, position_ids=flat_position_ids, token_type_ids=flat_token_type_ids,
-                               attention_mask=flat_attention_mask, head_mask=head_mask)
+                            attention_mask=flat_attention_mask, head_mask=head_mask)
         pooled_output = outputs[1]
 
         pooled_output = self.dropout(pooled_output)
@@ -454,6 +448,7 @@ class RobertaForMultipleChoice(BertPreTrainedModel):
             outputs = (loss,) + outputs
 
         return outputs  # (loss), reshaped_logits, (hidden_states), (attentions)
+
 
 
 class RobertaClassificationHead(nn.Module):

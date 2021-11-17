@@ -7,20 +7,17 @@ logger = logging.getLogger(__name__)
 try:
     from scipy.stats import pearsonr, spearmanr
     from sklearn.metrics import matthews_corrcoef, f1_score
-
     _has_sklearn = True
 except (AttributeError, ImportError) as e:
     logger.warning("To use data.metrics please install scikit-learn. See https://scikit-learn.org/stable/index.html")
     _has_sklearn = False
 
-
 def simple_accuracy(preds, labels):
     return (preds == labels).mean()
 
-
 def acc_and_f1(preds, labels):
     acc = simple_accuracy(preds, labels)
-    f1 = f1_score(y_true=labels, y_pred=preds, average="macro")
+    f1 = f1_score(y_true=labels, y_pred=preds,average="macro")
     return {
         "acc": acc,
         "f1": f1,
@@ -36,7 +33,6 @@ def pearson_and_spearman(preds, labels):
         "spearmanr": spearman_corr,
         "corr": (pearson_corr + spearman_corr) / 2,
     }
-
 
 def compute_metrics(task_name, preds, labels):
     assert len(preds) == len(labels)

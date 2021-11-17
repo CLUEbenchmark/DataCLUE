@@ -42,19 +42,19 @@ VOCAB_FILES_NAMES = {
 
 PRETRAINED_VOCAB_FILES_MAP = {
     'vocab_file':
-        {
-            'gpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-vocab.json",
-            'gpt2-medium': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-vocab.json",
-            'gpt2-large': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-vocab.json",
-            'distilgpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-vocab.json",
-        },
+    {
+        'gpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-vocab.json",
+        'gpt2-medium': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-vocab.json",
+        'gpt2-large': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-vocab.json",
+        'distilgpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-vocab.json",
+    },
     'merges_file':
-        {
-            'gpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-merges.txt",
-            'gpt2-medium': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-merges.txt",
-            'gpt2-large': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-merges.txt",
-            'distilgpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-merges.txt",
-        },
+    {
+        'gpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-merges.txt",
+        'gpt2-medium': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-merges.txt",
+        'gpt2-large': "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-merges.txt",
+        'distilgpt2': "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-merges.txt",
+    },
 }
 
 PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
@@ -63,7 +63,6 @@ PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
     'gpt2-large': 1024,
     'distilgpt2': 1024,
 }
-
 
 @lru_cache()
 def bytes_to_unicode():
@@ -78,17 +77,16 @@ def bytes_to_unicode():
     To avoid that, we want lookup tables between utf-8 bytes and unicode strings.
     """
     _chr = unichr if sys.version_info[0] == 2 else chr
-    bs = list(range(ord("!"), ord("~") + 1)) + list(range(ord("¡"), ord("¬") + 1)) + list(range(ord("®"), ord("ÿ") + 1))
+    bs = list(range(ord("!"), ord("~")+1))+list(range(ord("¡"), ord("¬")+1))+list(range(ord("®"), ord("ÿ")+1))
     cs = bs[:]
     n = 0
-    for b in range(2 ** 8):
+    for b in range(2**8):
         if b not in bs:
             bs.append(b)
-            cs.append(2 ** 8 + n)
+            cs.append(2**8+n)
             n += 1
     cs = [_chr(n) for n in cs]
     return dict(zip(bs, cs))
-
 
 def get_pairs(word):
     """Return set of symbol pairs in a word.
@@ -101,7 +99,6 @@ def get_pairs(word):
         pairs.add((prev_char, char))
         prev_char = char
     return pairs
-
 
 class GPT2Tokenizer(PreTrainedTokenizer):
     """
@@ -119,8 +116,8 @@ class GPT2Tokenizer(PreTrainedTokenizer):
     def __init__(self, vocab_file, merges_file, errors='replace', unk_token="<|endoftext|>",
                  bos_token="<|endoftext|>", eos_token="<|endoftext|>", **kwargs):
         super(GPT2Tokenizer, self).__init__(bos_token=bos_token, eos_token=eos_token, unk_token=unk_token, **kwargs)
-        self.max_len_single_sentence = self.max_len  # no default special tokens - you can update this value if you add special tokens
-        self.max_len_sentences_pair = self.max_len  # no default special tokens - you can update this value if you add special tokens
+        self.max_len_single_sentence = self.max_len # no default special tokens - you can update this value if you add special tokens
+        self.max_len_sentences_pair = self.max_len # no default special tokens - you can update this value if you add special tokens
 
         self.encoder = json.load(open(vocab_file, encoding="utf-8"))
         self.decoder = {v: k for k, v in self.encoder.items()}
@@ -149,7 +146,7 @@ class GPT2Tokenizer(PreTrainedTokenizer):
             return token
 
         while True:
-            bigram = min(pairs, key=lambda pair: self.bpe_ranks.get(pair, float('inf')))
+            bigram = min(pairs, key = lambda pair: self.bpe_ranks.get(pair, float('inf')))
             if bigram not in self.bpe_ranks:
                 break
             first, second = bigram
@@ -164,8 +161,8 @@ class GPT2Tokenizer(PreTrainedTokenizer):
                     new_word.extend(word[i:])
                     break
 
-                if word[i] == first and i < len(word) - 1 and word[i + 1] == second:
-                    new_word.append(first + second)
+                if word[i] == first and i < len(word)-1 and word[i+1] == second:
+                    new_word.append(first+second)
                     i += 2
                 else:
                     new_word.append(word[i])
@@ -192,11 +189,9 @@ class GPT2Tokenizer(PreTrainedTokenizer):
         bpe_tokens = []
         for token in re.findall(self.pat, text):
             if sys.version_info[0] == 2:
-                token = ''.join(self.byte_encoder[ord(b)] for b in
-                                token)  # Maps all our bytes to unicode strings, avoiding controle tokens of the BPE (spaces in our case)
+                token = ''.join(self.byte_encoder[ord(b)] for b in token) # Maps all our bytes to unicode strings, avoiding controle tokens of the BPE (spaces in our case)
             else:
-                token = ''.join(self.byte_encoder[b] for b in token.encode(
-                    'utf-8'))  # Maps all our bytes to unicode strings, avoiding controle tokens of the BPE (spaces in our case)
+                token = ''.join(self.byte_encoder[b] for b in token.encode('utf-8')) # Maps all our bytes to unicode strings, avoiding controle tokens of the BPE (spaces in our case)
             bpe_tokens.extend(bpe_token for bpe_token in self.bpe(token).split(' '))
         return bpe_tokens
 

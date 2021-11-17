@@ -137,11 +137,13 @@ TODO 这里是实验分析 需要结合实验数据做一些说明。以模型�
 
 为了方便上手，我们开发了[dckit](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
 
+### 安装
+`pip install -e .`
+### 使用
 基于dckit你只需要关注于数据处理部分即可
 
 ```python
-from dckit.utils import read_datasets, random_split_data
-from dckit.eval import evaluate
+from dckit import read_datasets, random_split_data, evaluate
 
 data = read_datasets()
 # TODO 对数据进行处理

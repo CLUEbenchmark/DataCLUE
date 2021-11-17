@@ -6,7 +6,6 @@ __version__ = "2.1.1"
 # and: https://github.com/tensorflow/tensorflow/issues/26691#issuecomment-500369493
 try:
     import absl.logging
-
     absl.logging.set_verbosity('info')
     absl.logging.set_stderrthreshold('info')
     absl.logging._warn_preinit_stderr = False
@@ -62,10 +61,10 @@ if is_torch_available():
                                 BertForTokenClassification, BertForQuestionAnswering,
                                 load_tf_weights_in_bert, BERT_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_openai import (OpenAIGPTPreTrainedModel, OpenAIGPTModel,
-                                  OpenAIGPTLMHeadModel, OpenAIGPTDoubleHeadsModel,
-                                  load_tf_weights_in_openai_gpt, OPENAI_GPT_PRETRAINED_MODEL_ARCHIVE_MAP)
+                                OpenAIGPTLMHeadModel, OpenAIGPTDoubleHeadsModel,
+                                load_tf_weights_in_openai_gpt, OPENAI_GPT_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_transfo_xl import (TransfoXLPreTrainedModel, TransfoXLModel, TransfoXLLMHeadModel,
-                                      load_tf_weights_in_transfo_xl, TRANSFO_XL_PRETRAINED_MODEL_ARCHIVE_MAP)
+                                    load_tf_weights_in_transfo_xl, TRANSFO_XL_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_gpt2 import (GPT2PreTrainedModel, GPT2Model,
                                 GPT2LMHeadModel, GPT2DoubleHeadsModel,
                                 load_tf_weights_in_gpt2, GPT2_PRETRAINED_MODEL_ARCHIVE_MAP)
@@ -73,19 +72,19 @@ if is_torch_available():
                                 CTRLLMHeadModel,
                                 CTRL_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_xlnet import (XLNetPreTrainedModel, XLNetModel, XLNetLMHeadModel,
-                                 XLNetForSequenceClassification, XLNetForMultipleChoice,
-                                 XLNetForQuestionAnsweringSimple, XLNetForQuestionAnswering,
-                                 load_tf_weights_in_xlnet, XLNET_PRETRAINED_MODEL_ARCHIVE_MAP)
-    from .modeling_xlm import (XLMPreTrainedModel, XLMModel,
-                               XLMWithLMHeadModel, XLMForSequenceClassification,
-                               XLMForQuestionAnswering, XLMForQuestionAnsweringSimple,
-                               XLM_PRETRAINED_MODEL_ARCHIVE_MAP)
+                                XLNetForSequenceClassification, XLNetForMultipleChoice,
+                                XLNetForQuestionAnsweringSimple, XLNetForQuestionAnswering,
+                                load_tf_weights_in_xlnet, XLNET_PRETRAINED_MODEL_ARCHIVE_MAP)
+    from .modeling_xlm import (XLMPreTrainedModel , XLMModel,
+                            XLMWithLMHeadModel, XLMForSequenceClassification,
+                            XLMForQuestionAnswering, XLMForQuestionAnsweringSimple,
+                            XLM_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_roberta import (RobertaForMaskedLM, RobertaModel,
-                                   RobertaForSequenceClassification, RobertaForMultipleChoice,
-                                   ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP)
+                                RobertaForSequenceClassification, RobertaForMultipleChoice,
+                                ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_distilbert import (DistilBertForMaskedLM, DistilBertModel,
-                                      DistilBertForSequenceClassification, DistilBertForQuestionAnswering,
-                                      DISTILBERT_PRETRAINED_MODEL_ARCHIVE_MAP)
+                                DistilBertForSequenceClassification, DistilBertForQuestionAnswering,
+                                DISTILBERT_PRETRAINED_MODEL_ARCHIVE_MAP)
     from .modeling_albert import AlbertForSequenceClassification
 
     # Optimization

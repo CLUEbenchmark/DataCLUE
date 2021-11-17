@@ -35,11 +35,11 @@ def read_datasets(dataset='CIC'):
         raise NotImplementedError
 
 
-def random_split_data(data, test_size=2000, seed=42):
+def random_split_data(data, test_size=2000, seed=0):
     json_data = data['json']
     labels = []
     for line in json_data:
-        line.append(int(line['label']))
+        labels.append(int(line['label']))
     train_idx, test_idx, _, _ = train_test_split(range(len(labels)), labels, stratify=labels,
                                                  shuffle=True, test_size=test_size, random_state=seed)
 

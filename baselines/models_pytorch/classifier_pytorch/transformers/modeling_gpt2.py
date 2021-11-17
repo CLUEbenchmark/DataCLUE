@@ -36,12 +36,10 @@ from .file_utils import add_start_docstrings
 
 logger = logging.getLogger(__name__)
 
-GPT2_PRETRAINED_MODEL_ARCHIVE_MAP = {
-    "gpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-pytorch_model.bin",
-    "gpt2-medium": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-pytorch_model.bin",
-    "gpt2-large": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-pytorch_model.bin",
-    "distilgpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-pytorch_model.bin", }
-
+GPT2_PRETRAINED_MODEL_ARCHIVE_MAP = {"gpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-pytorch_model.bin",
+                                     "gpt2-medium": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-pytorch_model.bin",
+                                     "gpt2-large": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-pytorch_model.bin",
+                                     "distilgpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-pytorch_model.bin",}
 
 def load_tf_weights_in_gpt2(model, config, gpt2_checkpoint_path):
     """ Load tf checkpoints in a pytorch model
@@ -52,7 +50,7 @@ def load_tf_weights_in_gpt2(model, config, gpt2_checkpoint_path):
         import tensorflow as tf
     except ImportError:
         logger.error("Loading a TensorFlow model in PyTorch, requires TensorFlow to be installed. Please see "
-                     "https://www.tensorflow.org/install/ for installation instructions.")
+            "https://www.tensorflow.org/install/ for installation instructions.")
         raise
     tf_path = os.path.abspath(gpt2_checkpoint_path)
     logger.info("Converting TensorFlow checkpoint from {}".format(tf_path))
@@ -131,7 +129,7 @@ class Attention(nn.Module):
             mask[head] = 0
         mask = mask.view(-1).contiguous().eq(1)
         index = torch.arange(len(mask))[mask].long()
-        index_attn = torch.cat([index, index + self.split_size, index + (2 * self.split_size)])
+        index_attn = torch.cat([index, index + self.split_size, index + (2*self.split_size)])
 
         # Prune conv1d layers
         self.c_attn = prune_conv1d_layer(self.c_attn, index_attn, dim=1)
@@ -147,7 +145,7 @@ class Attention(nn.Module):
         if self.scale:
             w = w / math.sqrt(v.size(-1))
         nd, ns = w.size(-2), w.size(-1)
-        b = self.bias[:, :, ns - nd:ns, :ns]
+        b = self.bias[:, :, ns-nd:ns, :ns]
         w = w * b - 1e4 * (1 - b)
 
         if attention_mask is not None:
@@ -317,7 +315,6 @@ GPT2_INPUTS_DOCSTRING = r"""    Inputs:
             ``1`` indicates the head is **not masked**, ``0`` indicates the head is **masked**.
 """
 
-
 @add_start_docstrings("The bare GPT2 Model transformer outputting raw hidden-states without any specific head on top.",
                       GPT2_START_DOCSTRING, GPT2_INPUTS_DOCSTRING)
 class GPT2Model(GPT2PreTrainedModel):
@@ -346,7 +343,6 @@ class GPT2Model(GPT2PreTrainedModel):
         last_hidden_states = outputs[0]  # The last hidden-state is the first element of the output tuple
 
     """
-
     def __init__(self, config):
         super(GPT2Model, self).__init__(config)
         self.output_hidden_states = config.output_hidden_states
@@ -372,8 +368,7 @@ class GPT2Model(GPT2PreTrainedModel):
         for layer, heads in heads_to_prune.items():
             self.h[layer].attn.prune_heads(heads)
 
-    def forward(self, input_ids, past=None, attention_mask=None, token_type_ids=None, position_ids=None,
-                head_mask=None):
+    def forward(self, input_ids, past=None, attention_mask=None, token_type_ids=None, position_ids=None, head_mask=None):
         input_shape = input_ids.size()
         input_ids = input_ids.view(-1, input_shape[-1])
         if token_type_ids is not None:
@@ -387,8 +382,7 @@ class GPT2Model(GPT2PreTrainedModel):
         else:
             past_length = past[0][0].size(-2)
         if position_ids is None:
-            position_ids = torch.arange(past_length, input_ids.size(-1) + past_length, dtype=torch.long,
-                                        device=input_ids.device)
+            position_ids = torch.arange(past_length, input_ids.size(-1) + past_length, dtype=torch.long, device=input_ids.device)
             position_ids = position_ids.unsqueeze(0).expand_as(input_ids)
 
         # Attention mask.
@@ -406,7 +400,7 @@ class GPT2Model(GPT2PreTrainedModel):
             # positions we want to attend and -10000.0 for masked positions.
             # Since we are adding it to the raw scores before the softmax, this is
             # effectively the same as removing these entirely.
-            attention_mask = attention_mask.to(dtype=next(self.parameters()).dtype)  # fp16 compatibility
+            attention_mask = attention_mask.to(dtype=next(self.parameters()).dtype) # fp16 compatibility
             attention_mask = (1.0 - attention_mask) * -10000.0
 
         # Prepare head mask if needed
@@ -418,10 +412,8 @@ class GPT2Model(GPT2PreTrainedModel):
                 head_mask = head_mask.unsqueeze(0).unsqueeze(0).unsqueeze(-1).unsqueeze(-1)
                 head_mask = head_mask.expand(self.config.n_layer, -1, -1, -1, -1)
             elif head_mask.dim() == 2:
-                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(
-                    -1)  # We can specify head_mask for each layer
-            head_mask = head_mask.to(
-                dtype=next(self.parameters()).dtype)  # switch to fload if need + fp16 compatibility
+                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(-1)  # We can specify head_mask for each layer
+            head_mask = head_mask.to(dtype=next(self.parameters()).dtype) # switch to fload if need + fp16 compatibility
         else:
             head_mask = [None] * self.config.n_layer
 
@@ -516,7 +508,6 @@ class GPT2LMHeadModel(GPT2PreTrainedModel):
         loss, logits = outputs[:2]
 
     """
-
     def __init__(self, config):
         super(GPT2LMHeadModel, self).__init__(config)
         self.transformer = GPT2Model(config)
@@ -624,7 +615,6 @@ class GPT2DoubleHeadsModel(GPT2PreTrainedModel):
         lm_prediction_scores, mc_prediction_scores = outputs[:2]
 
     """
-
     def __init__(self, config):
         super(GPT2DoubleHeadsModel, self).__init__(config)
         self.transformer = GPT2Model(config)

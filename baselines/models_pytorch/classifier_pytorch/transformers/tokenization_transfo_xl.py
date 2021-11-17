@@ -48,9 +48,9 @@ VOCAB_FILES_NAMES = {'pretrained_vocab_file': 'vocab.bin', 'vocab_file': 'vocab.
 
 PRETRAINED_VOCAB_FILES_MAP = {
     'pretrained_vocab_file':
-        {
-            'transfo-xl-wt103': "https://s3.amazonaws.com/models.huggingface.co/bert/transfo-xl-wt103-vocab.bin",
-        }
+    {
+        'transfo-xl-wt103': "https://s3.amazonaws.com/models.huggingface.co/bert/transfo-xl-wt103-vocab.bin",
+    }
 }
 
 PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
@@ -61,7 +61,6 @@ PRETRAINED_CORPUS_ARCHIVE_MAP = {
     'transfo-xl-wt103': "https://s3.amazonaws.com/models.huggingface.co/bert/transfo-xl-wt103-corpus.bin",
 }
 CORPUS_NAME = 'corpus.bin'
-
 
 class TransfoXLTokenizer(PreTrainedTokenizer):
     """
@@ -79,8 +78,8 @@ class TransfoXLTokenizer(PreTrainedTokenizer):
                                                  additional_special_tokens=additional_special_tokens,
                                                  **kwargs)
 
-        self.max_len_single_sentence = self.max_len  # no default special tokens - you can update this value if you add special tokens
-        self.max_len_sentences_pair = self.max_len  # no default special tokens - you can update this value if you add special tokens
+        self.max_len_single_sentence = self.max_len # no default special tokens - you can update this value if you add special tokens
+        self.max_len_sentences_pair = self.max_len # no default special tokens - you can update this value if you add special tokens
 
         if never_split is None:
             never_split = self.all_special_tokens
@@ -175,7 +174,7 @@ class TransfoXLTokenizer(PreTrainedTokenizer):
                 len(self), len(self.counter)))
 
     def encode_file(self, path, ordered=False, verbose=False, add_eos=True,
-                    add_double_eos=False):
+            add_double_eos=False):
         if verbose: logger.info('encoding file {} ...'.format(path))
         assert os.path.exists(path)
         encoded = []
@@ -184,7 +183,7 @@ class TransfoXLTokenizer(PreTrainedTokenizer):
                 if verbose and idx > 0 and idx % 500000 == 0:
                     logger.info('    line {}'.format(idx))
                 symbols = self.tokenize(line, add_eos=add_eos,
-                                        add_double_eos=add_double_eos)
+                    add_double_eos=add_double_eos)
                 encoded.append(self.convert_to_tensor(symbols))
 
         if ordered:
@@ -262,7 +261,7 @@ class TransfoXLTokenizer(PreTrainedTokenizer):
         else:
             symbols = line.split(self.delimiter)
 
-        if add_double_eos:  # lm1b
+        if add_double_eos: # lm1b
             return ['<S>'] + symbols + ['<S>']
         elif add_eos:
             return symbols + ['<eos>']
@@ -301,7 +300,7 @@ class LMOrderedIterator(object):
         beg_idx = max(0, i - self.ext_len)
 
         data = self.data[beg_idx:end_idx]
-        target = self.data[i + 1:i + 1 + seq_len]
+        target = self.data[i+1:i+1+seq_len]
 
         data_out = data.transpose(0, 1).contiguous().to(self.device)
         target_out = target.transpose(0, 1).contiguous().to(self.device)
@@ -377,10 +376,10 @@ class LMShuffledIterator(object):
                         # number of new tokens to fill in
                         n_new = min(len(streams[i]) - 1, self.bptt - n_filled)
                         # first n_retain tokens are retained from last batch
-                        data[n_retain + n_filled:n_retain + n_filled + n_new, i] = \
+                        data[n_retain+n_filled:n_retain+n_filled+n_new, i] = \
                             streams[i][:n_new]
-                        target[n_filled:n_filled + n_new, i] = \
-                            streams[i][1:n_new + 1]
+                        target[n_filled:n_filled+n_new, i] = \
+                            streams[i][1:n_new+1]
                         streams[i] = streams[i][n_new:]
                         n_filled += n_new
                 except StopIteration:
@@ -410,7 +409,7 @@ class LMShuffledIterator(object):
 
 class LMMultiFileIterator(LMShuffledIterator):
     def __init__(self, paths, vocab, bsz, bptt, device='cpu', ext_len=None,
-                 shuffle=False):
+        shuffle=False):
 
         self.paths = paths
         self.vocab = vocab

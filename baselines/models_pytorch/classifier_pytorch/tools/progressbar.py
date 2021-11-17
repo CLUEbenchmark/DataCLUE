@@ -1,6 +1,5 @@
 import time
 
-
 class ProgressBar(object):
     '''
     custom progress bar
@@ -9,8 +8,7 @@ class ProgressBar(object):
         >>> step = 2
         >>> pbar(step=step)
     '''
-
-    def __init__(self, n_total, width=30, desc='Training'):
+    def __init__(self, n_total,width=30,desc = 'Training'):
         self.width = width
         self.n_total = n_total
         self.start_time = time.time()
@@ -26,7 +24,7 @@ class ProgressBar(object):
         prog_width = int(self.width * recv_per)
         if prog_width > 0:
             bar += '=' * (prog_width - 1)
-            if current < self.n_total:
+            if current< self.n_total:
                 bar += ">"
             else:
                 bar += '='

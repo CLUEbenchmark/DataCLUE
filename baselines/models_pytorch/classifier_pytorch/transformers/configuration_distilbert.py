@@ -41,7 +41,7 @@ class DistilBertConfig(PretrainedConfig):
                  n_layers=6,
                  n_heads=12,
                  dim=768,
-                 hidden_dim=4 * 768,
+                 hidden_dim=4*768,
                  dropout=0.1,
                  attention_dropout=0.1,
                  activation='gelu',
@@ -53,7 +53,7 @@ class DistilBertConfig(PretrainedConfig):
         super(DistilBertConfig, self).__init__(**kwargs)
 
         if isinstance(vocab_size_or_config_json_file, str) or (sys.version_info[0] == 2
-                                                               and isinstance(vocab_size_or_config_json_file, unicode)):
+                        and isinstance(vocab_size_or_config_json_file, unicode)):
             with open(vocab_size_or_config_json_file, "r", encoding='utf-8') as reader:
                 json_config = json.loads(reader.read())
             for key, value in json_config.items():
@@ -76,7 +76,6 @@ class DistilBertConfig(PretrainedConfig):
         else:
             raise ValueError("First argument must be either a vocabulary size (int)"
                              " or the path to a pretrained model config file (str)")
-
     @property
     def hidden_size(self):
         return self.dim

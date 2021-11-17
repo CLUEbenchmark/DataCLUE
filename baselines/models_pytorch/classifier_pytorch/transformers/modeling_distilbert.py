@@ -36,8 +36,8 @@ from .configuration_distilbert import DistilBertConfig
 from .file_utils import add_start_docstrings
 
 import logging
-
 logger = logging.getLogger(__name__)
+
 
 DISTILBERT_PRETRAINED_MODEL_ARCHIVE_MAP = {
     'distilbert-base-uncased': "https://s3.amazonaws.com/models.huggingface.co/bert/distilbert-base-uncased-pytorch_model.bin",
@@ -49,7 +49,6 @@ DISTILBERT_PRETRAINED_MODEL_ARCHIVE_MAP = {
 def gelu(x):
     return 0.5 * x * (1.0 + torch.erf(x / math.sqrt(2.0)))
 
-
 def create_sinusoidal_embeddings(n_pos, dim, out):
     position_enc = np.array([
         [pos / np.power(10000, 2 * (j // 2) / dim) for j in range(dim)]
@@ -59,7 +58,6 @@ def create_sinusoidal_embeddings(n_pos, dim, out):
     out[:, 1::2] = torch.FloatTensor(np.cos(position_enc[:, 1::2]))
     out.detach_()
     out.requires_grad = False
-
 
 class Embeddings(nn.Module):
     def __init__(self,
@@ -88,17 +86,16 @@ class Embeddings(nn.Module):
             The embedded tokens (plus position embeddings, no token_type embeddings)
         """
         seq_length = input_ids.size(1)
-        position_ids = torch.arange(seq_length, dtype=torch.long, device=input_ids.device)  # (max_seq_length)
-        position_ids = position_ids.unsqueeze(0).expand_as(input_ids)  # (bs, max_seq_length)
+        position_ids = torch.arange(seq_length, dtype=torch.long, device=input_ids.device) # (max_seq_length)
+        position_ids = position_ids.unsqueeze(0).expand_as(input_ids)                      # (bs, max_seq_length)
 
-        word_embeddings = self.word_embeddings(input_ids)  # (bs, max_seq_length, dim)
-        position_embeddings = self.position_embeddings(position_ids)  # (bs, max_seq_length, dim)
+        word_embeddings = self.word_embeddings(input_ids)                   # (bs, max_seq_length, dim)
+        position_embeddings = self.position_embeddings(position_ids)        # (bs, max_seq_length, dim)
 
         embeddings = word_embeddings + position_embeddings  # (bs, max_seq_length, dim)
-        embeddings = self.LayerNorm(embeddings)  # (bs, max_seq_length, dim)
-        embeddings = self.dropout(embeddings)  # (bs, max_seq_length, dim)
+        embeddings = self.LayerNorm(embeddings)             # (bs, max_seq_length, dim)
+        embeddings = self.dropout(embeddings)               # (bs, max_seq_length, dim)
         return embeddings
-
 
 class MultiHeadSelfAttention(nn.Module):
     def __init__(self, config):
@@ -139,7 +136,7 @@ class MultiHeadSelfAttention(nn.Module):
         self.dim = attention_head_size * self.n_heads
         self.pruned_heads = self.pruned_heads.union(heads)
 
-    def forward(self, query, key, value, mask, head_mask=None):
+    def forward(self, query, key, value, mask, head_mask = None):
         """
         Parameters
         ----------
@@ -172,31 +169,30 @@ class MultiHeadSelfAttention(nn.Module):
             """ group heads """
             return x.transpose(1, 2).contiguous().view(bs, -1, self.n_heads * dim_per_head)
 
-        q = shape(self.q_lin(query))  # (bs, n_heads, q_length, dim_per_head)
-        k = shape(self.k_lin(key))  # (bs, n_heads, k_length, dim_per_head)
-        v = shape(self.v_lin(value))  # (bs, n_heads, k_length, dim_per_head)
+        q = shape(self.q_lin(query))           # (bs, n_heads, q_length, dim_per_head)
+        k = shape(self.k_lin(key))             # (bs, n_heads, k_length, dim_per_head)
+        v = shape(self.v_lin(value))           # (bs, n_heads, k_length, dim_per_head)
 
-        q = q / math.sqrt(dim_per_head)  # (bs, n_heads, q_length, dim_per_head)
-        scores = torch.matmul(q, k.transpose(2, 3))  # (bs, n_heads, q_length, k_length)
-        mask = (mask == 0).view(mask_reshp).expand_as(scores)  # (bs, n_heads, q_length, k_length)
-        scores.masked_fill_(mask, -float('inf'))  # (bs, n_heads, q_length, k_length)
+        q = q / math.sqrt(dim_per_head)                     # (bs, n_heads, q_length, dim_per_head)
+        scores = torch.matmul(q, k.transpose(2,3))          # (bs, n_heads, q_length, k_length)
+        mask = (mask==0).view(mask_reshp).expand_as(scores) # (bs, n_heads, q_length, k_length)
+        scores.masked_fill_(mask, -float('inf'))            # (bs, n_heads, q_length, k_length)
 
-        weights = nn.Softmax(dim=-1)(scores)  # (bs, n_heads, q_length, k_length)
-        weights = self.dropout(weights)  # (bs, n_heads, q_length, k_length)
+        weights = nn.Softmax(dim=-1)(scores)   # (bs, n_heads, q_length, k_length)
+        weights = self.dropout(weights)        # (bs, n_heads, q_length, k_length)
 
         # Mask heads if we want to
         if head_mask is not None:
             weights = weights * head_mask
 
-        context = torch.matmul(weights, v)  # (bs, n_heads, q_length, dim_per_head)
-        context = unshape(context)  # (bs, q_length, dim)
-        context = self.out_lin(context)  # (bs, q_length, dim)
+        context = torch.matmul(weights, v)     # (bs, n_heads, q_length, dim_per_head)
+        context = unshape(context)             # (bs, q_length, dim)
+        context = self.out_lin(context)        # (bs, q_length, dim)
 
         if self.output_attentions:
             return (context, weights)
         else:
             return (context,)
-
 
 class FFN(nn.Module):
     def __init__(self, config):
@@ -204,8 +200,7 @@ class FFN(nn.Module):
         self.dropout = nn.Dropout(p=config.dropout)
         self.lin1 = nn.Linear(in_features=config.dim, out_features=config.hidden_dim)
         self.lin2 = nn.Linear(in_features=config.hidden_dim, out_features=config.dim)
-        assert config.activation in ['relu', 'gelu'], "activation ({}) must be in ['relu', 'gelu']".format(
-            config.activation)
+        assert config.activation in ['relu', 'gelu'], "activation ({}) must be in ['relu', 'gelu']".format(config.activation)
         self.activation = gelu if config.activation == 'gelu' else nn.ReLU()
 
     def forward(self, input):
@@ -214,7 +209,6 @@ class FFN(nn.Module):
         x = self.lin2(x)
         x = self.dropout(x)
         return x
-
 
 class TransformerBlock(nn.Module):
     def __init__(self, config):
@@ -252,14 +246,14 @@ class TransformerBlock(nn.Module):
         # Self-Attention
         sa_output = self.attention(query=x, key=x, value=x, mask=attn_mask, head_mask=head_mask)
         if self.output_attentions:
-            sa_output, sa_weights = sa_output  # (bs, seq_length, dim), (bs, n_heads, seq_length, seq_length)
-        else:  # To handle these `output_attention` or `output_hidden_states` cases returning tuples
+            sa_output, sa_weights = sa_output                  # (bs, seq_length, dim), (bs, n_heads, seq_length, seq_length)
+        else: # To handle these `output_attention` or `output_hidden_states` cases returning tuples
             assert type(sa_output) == tuple
             sa_output = sa_output[0]
-        sa_output = self.sa_layer_norm(sa_output + x)  # (bs, seq_length, dim)
+        sa_output = self.sa_layer_norm(sa_output + x)          # (bs, seq_length, dim)
 
         # Feed Forward Network
-        ffn_output = self.ffn(sa_output)  # (bs, seq_length, dim)
+        ffn_output = self.ffn(sa_output)                             # (bs, seq_length, dim)
         ffn_output = self.output_layer_norm(ffn_output + sa_output)  # (bs, seq_length, dim)
 
         output = (ffn_output,)
@@ -342,7 +336,7 @@ class DistilBertPreTrainedModel(PreTrainedModel):
 
     def __init__(self, *inputs, **kwargs):
         super(DistilBertPreTrainedModel, self).__init__(*inputs, **kwargs)
-
+    
     def _init_weights(self, module):
         """ Initialize the weights.
         """
@@ -398,10 +392,8 @@ DISTILBERT_INPUTS_DOCSTRING = r"""
             ``1`` indicates the head is **not masked**, ``0`` indicates the head is **masked**.
 """
 
-
-@add_start_docstrings(
-    "The bare DistilBERT encoder/transformer outputting raw hidden-states without any specific head on top.",
-    DISTILBERT_START_DOCSTRING, DISTILBERT_INPUTS_DOCSTRING)
+@add_start_docstrings("The bare DistilBERT encoder/transformer outputting raw hidden-states without any specific head on top.",
+                      DISTILBERT_START_DOCSTRING, DISTILBERT_INPUTS_DOCSTRING)
 class DistilBertModel(DistilBertPreTrainedModel):
     r"""
     Outputs: `Tuple` comprising various elements depending on the configuration (config) and inputs:
@@ -424,12 +416,11 @@ class DistilBertModel(DistilBertPreTrainedModel):
         last_hidden_states = outputs[0]  # The last hidden-state is the first element of the output tuple
 
     """
-
     def __init__(self, config):
         super(DistilBertModel, self).__init__(config)
 
-        self.embeddings = Embeddings(config)  # Embeddings
-        self.transformer = Transformer(config)  # Encoder
+        self.embeddings = Embeddings(config)   # Embeddings
+        self.transformer = Transformer(config) # Encoder
 
         self.init_weights()
 
@@ -450,7 +441,7 @@ class DistilBertModel(DistilBertPreTrainedModel):
     def forward(self,
                 input_ids, attention_mask=None, head_mask=None):
         if attention_mask is None:
-            attention_mask = torch.ones_like(input_ids)  # (bs, seq_length)
+            attention_mask = torch.ones_like(input_ids) # (bs, seq_length)
 
         # Prepare head mask if needed
         # 1.0 in head_mask indicate we keep the head
@@ -462,21 +453,19 @@ class DistilBertModel(DistilBertPreTrainedModel):
                 head_mask = head_mask.unsqueeze(0).unsqueeze(0).unsqueeze(-1).unsqueeze(-1)
                 head_mask = head_mask.expand(self.config.num_hidden_layers, -1, -1, -1, -1)
             elif head_mask.dim() == 2:
-                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(
-                    -1)  # We can specify head_mask for each layer
-            head_mask = head_mask.to(
-                dtype=next(self.parameters()).dtype)  # switch to fload if need + fp16 compatibility
+                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(-1)  # We can specify head_mask for each layer
+            head_mask = head_mask.to(dtype=next(self.parameters()).dtype) # switch to fload if need + fp16 compatibility
         else:
             head_mask = [None] * self.config.num_hidden_layers
 
-        embedding_output = self.embeddings(input_ids)  # (bs, seq_length, dim)
+        embedding_output = self.embeddings(input_ids)   # (bs, seq_length, dim)
         tfmr_output = self.transformer(x=embedding_output,
                                        attn_mask=attention_mask,
                                        head_mask=head_mask)
         hidden_state = tfmr_output[0]
-        output = (hidden_state,) + tfmr_output[1:]
+        output = (hidden_state, ) + tfmr_output[1:]
 
-        return output  # last-layer hidden-state, (all hidden_states), (all attentions)
+        return output # last-layer hidden-state, (all hidden_states), (all attentions)
 
 
 @add_start_docstrings("""DistilBert Model with a `masked language modeling` head on top. """,
@@ -511,7 +500,6 @@ class DistilBertForMaskedLM(DistilBertPreTrainedModel):
         loss, prediction_scores = outputs[:2]
 
     """
-
     def __init__(self, config):
         super(DistilBertForMaskedLM, self).__init__(config)
         self.output_attentions = config.output_attentions
@@ -538,19 +526,19 @@ class DistilBertForMaskedLM(DistilBertPreTrainedModel):
         dlbrt_output = self.distilbert(input_ids=input_ids,
                                        attention_mask=attention_mask,
                                        head_mask=head_mask)
-        hidden_states = dlbrt_output[0]  # (bs, seq_length, dim)
-        prediction_logits = self.vocab_transform(hidden_states)  # (bs, seq_length, dim)
-        prediction_logits = gelu(prediction_logits)  # (bs, seq_length, dim)
-        prediction_logits = self.vocab_layer_norm(prediction_logits)  # (bs, seq_length, dim)
+        hidden_states = dlbrt_output[0]                              # (bs, seq_length, dim)
+        prediction_logits = self.vocab_transform(hidden_states)      # (bs, seq_length, dim)
+        prediction_logits = gelu(prediction_logits)                  # (bs, seq_length, dim)
+        prediction_logits = self.vocab_layer_norm(prediction_logits) # (bs, seq_length, dim)
         prediction_logits = self.vocab_projector(prediction_logits)  # (bs, seq_length, vocab_size)
 
-        outputs = (prediction_logits,) + dlbrt_output[1:]
+        outputs = (prediction_logits, ) + dlbrt_output[1:]
         if masked_lm_labels is not None:
             mlm_loss = self.mlm_loss_fct(prediction_logits.view(-1, prediction_logits.size(-1)),
                                          masked_lm_labels.view(-1))
-            outputs = (mlm_loss,) + outputs
+            outputs = (mlm_loss,) + outputs     
 
-        return outputs  # (mlm_loss), prediction_logits, (all hidden_states), (all attentions)
+        return outputs # (mlm_loss), prediction_logits, (all hidden_states), (all attentions)
 
 
 @add_start_docstrings("""DistilBert Model transformer with a sequence classification/regression head on top (a linear layer on top of
@@ -587,7 +575,6 @@ class DistilBertForSequenceClassification(DistilBertPreTrainedModel):
         loss, logits = outputs[:2]
 
     """
-
     def __init__(self, config):
         super(DistilBertForSequenceClassification, self).__init__(config)
         self.num_labels = config.num_labels
@@ -599,16 +586,16 @@ class DistilBertForSequenceClassification(DistilBertPreTrainedModel):
 
         self.init_weights()
 
-    def forward(self, input_ids, attention_mask=None, head_mask=None, labels=None):
+    def forward(self, input_ids,  attention_mask=None, head_mask=None, labels=None):
         distilbert_output = self.distilbert(input_ids=input_ids,
                                             attention_mask=attention_mask,
                                             head_mask=head_mask)
-        hidden_state = distilbert_output[0]  # (bs, seq_len, dim)
-        pooled_output = hidden_state[:, 0]  # (bs, dim)
-        pooled_output = self.pre_classifier(pooled_output)  # (bs, dim)
-        pooled_output = nn.ReLU()(pooled_output)  # (bs, dim)
-        pooled_output = self.dropout(pooled_output)  # (bs, dim)
-        logits = self.classifier(pooled_output)  # (bs, dim)
+        hidden_state = distilbert_output[0]                    # (bs, seq_len, dim)
+        pooled_output = hidden_state[:, 0]                    # (bs, dim)
+        pooled_output = self.pre_classifier(pooled_output)   # (bs, dim)
+        pooled_output = nn.ReLU()(pooled_output)             # (bs, dim)
+        pooled_output = self.dropout(pooled_output)         # (bs, dim)
+        logits = self.classifier(pooled_output)              # (bs, dim)
 
         outputs = (logits,) + distilbert_output[1:]
         if labels is not None:
@@ -663,7 +650,6 @@ class DistilBertForQuestionAnswering(DistilBertPreTrainedModel):
         loss, start_scores, end_scores = outputs[:3]
 
     """
-
     def __init__(self, config):
         super(DistilBertForQuestionAnswering, self).__init__(config)
 
@@ -673,18 +659,18 @@ class DistilBertForQuestionAnswering(DistilBertPreTrainedModel):
         self.dropout = nn.Dropout(config.qa_dropout)
 
         self.init_weights()
-
+        
     def forward(self, input_ids, attention_mask=None, head_mask=None, start_positions=None, end_positions=None):
         distilbert_output = self.distilbert(input_ids=input_ids,
                                             attention_mask=attention_mask,
                                             head_mask=head_mask)
-        hidden_states = distilbert_output[0]  # (bs, max_query_len, dim)
+        hidden_states = distilbert_output[0]                                 # (bs, max_query_len, dim)
 
-        hidden_states = self.dropout(hidden_states)  # (bs, max_query_len, dim)
-        logits = self.qa_outputs(hidden_states)  # (bs, max_query_len, 2)
+        hidden_states = self.dropout(hidden_states)                       # (bs, max_query_len, dim)
+        logits = self.qa_outputs(hidden_states)                           # (bs, max_query_len, 2)
         start_logits, end_logits = logits.split(1, dim=-1)
-        start_logits = start_logits.squeeze(-1)  # (bs, max_query_len)
-        end_logits = end_logits.squeeze(-1)  # (bs, max_query_len)
+        start_logits = start_logits.squeeze(-1)                           # (bs, max_query_len)
+        end_logits = end_logits.squeeze(-1)                               # (bs, max_query_len)
 
         outputs = (start_logits, end_logits,) + distilbert_output[1:]
         if start_positions is not None and end_positions is not None:

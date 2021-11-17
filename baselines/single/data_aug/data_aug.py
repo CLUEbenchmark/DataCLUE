@@ -1,8 +1,6 @@
 from tqdm import tqdm
-import json
 from textda.data_expansion import data_expansion
-from dckit.utils import read_datasets, random_split_data
-from dckit.evaluate import evaluate
+from dckit import read_datasets, random_split_data, evaluate
 
 
 def data_aug(data, num_aug=3):
@@ -25,6 +23,7 @@ def main():
     data = data_aug(data)
     random_split_data(data)
     f1 = evaluate()
+    print('Macro-F1=', f1)
     return f1
 
 

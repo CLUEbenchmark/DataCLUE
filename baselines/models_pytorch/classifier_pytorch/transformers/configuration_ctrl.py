@@ -27,7 +27,6 @@ logger = logging.getLogger(__name__)
 
 CTRL_PRETRAINED_CONFIG_ARCHIVE_MAP = {"ctrl": "https://storage.googleapis.com/sf-ctrl/pytorch/ctrl-config.json"}
 
-
 class CTRLConfig(PretrainedConfig):
     """Configuration class to store the configuration of a `CTRLModel`.
 
@@ -52,27 +51,27 @@ class CTRLConfig(PretrainedConfig):
     pretrained_config_archive_map = CTRL_PRETRAINED_CONFIG_ARCHIVE_MAP
 
     def __init__(
-            self,
-            vocab_size_or_config_json_file=246534,
-            n_positions=256,
-            n_ctx=256,
-            n_embd=1280,
-            dff=8192,
-            n_layer=48,
-            n_head=16,
-            resid_pdrop=0.1,
-            embd_pdrop=0.1,
-            attn_pdrop=0.1,
-            layer_norm_epsilon=1e-6,
-            initializer_range=0.02,
+        self,
+        vocab_size_or_config_json_file=246534,
+        n_positions=256,
+        n_ctx=256,
+        n_embd=1280,
+        dff=8192,
+        n_layer=48,
+        n_head=16,
+        resid_pdrop=0.1,
+        embd_pdrop=0.1,
+        attn_pdrop=0.1,
+        layer_norm_epsilon=1e-6,
+        initializer_range=0.02,
 
-            num_labels=1,
-            summary_type='cls_index',
-            summary_use_proj=True,
-            summary_activation=None,
-            summary_proj_to_labels=True,
-            summary_first_dropout=0.1,
-            **kwargs
+        num_labels=1,
+        summary_type='cls_index',
+        summary_use_proj=True,
+        summary_activation=None,
+        summary_proj_to_labels=True,
+        summary_first_dropout=0.1,
+        **kwargs
     ):
         """Constructs CTRLConfig.
 
@@ -116,7 +115,7 @@ class CTRLConfig(PretrainedConfig):
         self.summary_first_dropout = summary_first_dropout
         self.summary_proj_to_labels = summary_proj_to_labels
         if isinstance(vocab_size_or_config_json_file, str) or (sys.version_info[0] == 2
-                                                               and isinstance(vocab_size_or_config_json_file, unicode)):
+                        and isinstance(vocab_size_or_config_json_file, unicode)):
             with open(vocab_size_or_config_json_file, "r", encoding="utf-8") as reader:
                 json_config = json.loads(reader.read())
             for key, value in json_config.items():

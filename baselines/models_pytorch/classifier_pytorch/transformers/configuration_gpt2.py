@@ -29,8 +29,7 @@ logger = logging.getLogger(__name__)
 GPT2_PRETRAINED_CONFIG_ARCHIVE_MAP = {"gpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-config.json",
                                       "gpt2-medium": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-medium-config.json",
                                       "gpt2-large": "https://s3.amazonaws.com/models.huggingface.co/bert/gpt2-large-config.json",
-                                      "distilgpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-config.json", }
-
+                                      "distilgpt2": "https://s3.amazonaws.com/models.huggingface.co/bert/distilgpt2-config.json",}
 
 class GPT2Config(PretrainedConfig):
     """Configuration class to store the configuration of a `GPT2Model`.
@@ -55,26 +54,26 @@ class GPT2Config(PretrainedConfig):
     pretrained_config_archive_map = GPT2_PRETRAINED_CONFIG_ARCHIVE_MAP
 
     def __init__(
-            self,
-            vocab_size_or_config_json_file=50257,
-            n_positions=1024,
-            n_ctx=1024,
-            n_embd=768,
-            n_layer=12,
-            n_head=12,
-            resid_pdrop=0.1,
-            embd_pdrop=0.1,
-            attn_pdrop=0.1,
-            layer_norm_epsilon=1e-5,
-            initializer_range=0.02,
+        self,
+        vocab_size_or_config_json_file=50257,
+        n_positions=1024,
+        n_ctx=1024,
+        n_embd=768,
+        n_layer=12,
+        n_head=12,
+        resid_pdrop=0.1,
+        embd_pdrop=0.1,
+        attn_pdrop=0.1,
+        layer_norm_epsilon=1e-5,
+        initializer_range=0.02,
 
-            num_labels=1,
-            summary_type='cls_index',
-            summary_use_proj=True,
-            summary_activation=None,
-            summary_proj_to_labels=True,
-            summary_first_dropout=0.1,
-            **kwargs
+        num_labels=1,
+        summary_type='cls_index',
+        summary_use_proj=True,
+        summary_activation=None,
+        summary_proj_to_labels=True,
+        summary_first_dropout=0.1,
+        **kwargs
     ):
         """Constructs GPT2Config.
 
@@ -98,7 +97,7 @@ class GPT2Config(PretrainedConfig):
         super(GPT2Config, self).__init__(**kwargs)
 
         if isinstance(vocab_size_or_config_json_file, str) or (sys.version_info[0] == 2
-                                                               and isinstance(vocab_size_or_config_json_file, unicode)):
+                        and isinstance(vocab_size_or_config_json_file, unicode)):
             with open(vocab_size_or_config_json_file, "r", encoding="utf-8") as reader:
                 json_config = json.loads(reader.read())
             for key, value in json_config.items():
