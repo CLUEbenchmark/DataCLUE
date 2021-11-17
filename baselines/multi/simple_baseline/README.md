@@ -6,9 +6,3 @@
 2. 使用数据增强提升数据量，即对输入文本的增强；
 3. 将标签定义增强后添加到训练集中增加数据量。比如标签定义买家抱怨商品了;标签定义增强->买家抱怨商品涨价了。
 
-```
-环境：python 3.x
-进入到目录：cd baselines/simple_baseline
-首次运行前先安装包：pip install requirements.txt
-运行： python main.py
-```

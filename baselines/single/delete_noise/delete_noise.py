@@ -1,5 +1,4 @@
 from tqdm import tqdm
-from textda.data_expansion import data_expansion
 from dckit import read_datasets, random_split_data, evaluate
 from scipy.stats import entropy
 import numpy as np
@@ -29,7 +28,7 @@ def delete_noise(data, delete_num=100):
 
 def main():
     data = read_datasets()
-    data = data_aug(data)
+    data = delete_noise(data)
     random_split_data(data)
     f1 = evaluate()
     print('Macro-F1=', f1)

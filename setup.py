@@ -22,7 +22,7 @@ class Installation(install):
 setuptools.setup(
     name='dckit',
     version='0.0.1',
-    author='DataCLUE',
+    author='JC Liu',
     author_email='CLUE@CLUEbenchmarks.com',
     maintainer='DataCLUE',
     maintainer_email='CLUE@CLUEbenchmarks.com',
