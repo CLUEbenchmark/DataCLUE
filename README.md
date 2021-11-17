@@ -1,8 +1,8 @@
-# <a href='https://arxiv.org/abs/2111.08647'>DataCLUE: A Benchmark Suite for Data-centric NLP</a>
+## <a href='https://arxiv.org/abs/2111.08647'>DataCLUE: A Benchmark Suite for Data-centric NLP</a>
 
 **You can get the english version of [README](./README_en.md).**
 
-# <a href='DataCLUE介绍文章.中文版'>https://docs.qq.com/doc/p/51a1f46f64a72bc2ac0633427dc59d6e8d1b8d0a?dver=2.1.27277463</a>
+### <a href='https://docs.qq.com/doc/p/51a1f46f64a72bc2ac0633427dc59d6e8d1b8d0a?dver=2.1.27277463'>DataCLUE介绍文章.中文版</a>
 
 
 ## 内容导引
@@ -23,6 +23,19 @@
 | [联系方式与引用](#贡献与参与) | 如何参与项目或反馈问题|
 
 
+## 简介
+以数据为中心（Data-centric）的AI，是一种新型的AI探索方向。它的核心问题是如何通过系统化的改造你的数据（无论是输入或者标签）来提高最终效果。
+传统的AI是以模型为中心（Model-centric）的，主要考虑的问题是如何通过改造或优化模型来提高最终效果，它通常建立在一个比较固定的数据集上。
+最新的数据显示超过90%的论文都是以模型为中心的，通过模型创新或学习方法改进提高效果，即使不少改进影响可能效果并不是特别明显。有些人认为当前的人工智能领域，
+无论是自然语言处理（如BERT） 或计算机视觉(ResNet)， 已经存在很多成熟高效模型，并且模型可以很容易从开源网站如github获得；而与此同时，工业界实际落地
+过程中可能有80%的时间用于 清洗数据、构建高质量数据集，或在迭代过程中获得更多数据，从而提升模型效果。正是看到了这种巨大的差别，在吴恩达等人的推动下这种
+以数据为中心 （Data-centric）的AI进一步的系统化，并成为一个有具有巨大实用价值方法论。
+
+DataCLUE是一个以数据为中心的AI测评。它基于CLUE benchmark，结合Data-centric的AI的典型特征，进一步将Data-centric的AI应用于
+NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centric的AI。在原始数据集外，它通过提供额外的高价值的数据和数据和模型分析报告（增值服务）的形式，
+使得融入人类的AI迭代过程（Human-in-the-loop AI pipeline)变得更加高效，并能较大幅度的提升最终效果。
+
+
 ### DataCLUE测评.重要更新
 任务更新、开启双周赛和双周赛奖励
 
@@ -40,19 +53,6 @@
     3、资源消耗低：实验周期快，计算成本低。GPU环境单次实验3分钟完成；CPU环境也可较短时间完成训练。
 
 
-## 简介
-以数据为中心（Data-centric）的AI，是一种新型的AI探索方向。它的核心问题是如何通过系统化的改造你的数据（无论是输入或者标签）来提高最终效果。
-传统的AI是以模型为中心（Model-centric）的，主要考虑的问题是如何通过改造或优化模型来提高最终效果，它通常建立在一个比较固定的数据集上。
-最新的数据显示超过90%的论文都是以模型为中心的，通过模型创新或学习方法改进提高效果，即使不少改进影响可能效果并不是特别明显。有些人认为当前的人工智能领域，
-无论是自然语言处理（如BERT） 或计算机视觉(ResNet)， 已经存在很多成熟高效模型，并且模型可以很容易从开源网站如github获得；而与此同时，工业界实际落地
-过程中可能有80%的时间用于 清洗数据、构建高质量数据集，或在迭代过程中获得更多数据，从而提升模型效果。正是看到了这种巨大的差别，在吴恩达等人的推动下这种
-以数据为中心 （Data-centric）的AI进一步的系统化，并成为一个有具有巨大实用价值方法论。
-
-DataCLUE是一个以数据为中心的AI测评。它基于CLUE benchmark，结合Data-centric的AI的典型特征，进一步将Data-centric的AI应用于
-NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centric的AI。在原始数据集外，它通过提供额外的高价值的数据和数据和模型分析报告（增值服务）的形式，
-使得融入人类的AI迭代过程（Human-in-the-loop AI pipeline)变得更加高效，并能较大幅度的提升最终效果。
-
-
 ## 任务描述
 参与测评者需要改进任务下的数据集来提升任务的最终效果；将使用固定的模型和程序代码（公开）来训练数据集，并得到任务效果的数据。
 可以对训练集、验证集进行修改或者移动训练集和验证集建的数据，也可以通过非爬虫类手段新增数据来完善数据集。可以通过算法或程序或者结合人工的方式来改进数据集。
@@ -66,15 +66,22 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
     Train/Dev: 含有噪声的数据，都含有一定比例有标注错误的标签；
     Test_public：高质量数据（标注准确率95%或以上），用于评估改进数据集算法的最新效果，不能用于模型训练。
 
+
+## 改进数据集的baselines
+
+为了进一步促进社区发展，我们收集了相应的[baseline代码和说明](baselines)
+其中按照[单策略模型](baselines/single)和[多策略模型](baselines/multi)进行了分类
+可欢迎大家[贡献自己的方法](baselines/CONTRIBUTING.md)
+
 ## 工具集(dckit)介绍
 
 dckit: 用于改进数据集的工具集
 
 为了方便上手，我们开发了[DataCLUE Toolkit (dckit)](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
 
-### 安装
+#### 安装
 `pip install -e .`
-### 使用
+#### 使用
 基于dckit你只需要关注于数据处理部分即可
 
 ```python
@@ -87,14 +94,6 @@ random_split_data(data)
 f1 = evaluate()
 ```
 
-### 改进数据集的baselines
-
-为了进一步促进社区发展，我们收集了相应的[baseline代码和说明](baselines)
-其中按照[单策略模型](baselines/single)和[多策略模型](baselines/multi)进行了分类
-可欢迎大家[贡献自己的方法](baselines/CONTRIBUTING.md)
-
-
-
 ## 实验结果
 |    | IFLYTEK(F1 Score, macro)     | 
 | :----:| :----:  | 
@@ -104,6 +103,8 @@ f1 = evaluate()
 |   Data-centric | ?    | 
 
    <img src="./resources/img/improve.jpeg"  width="80%" height="80%" />
+
+ 更多详细的实验结果，见：论文和介绍文章
 
 ## 实验分析 
 TODO 这里是实验分析
