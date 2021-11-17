@@ -36,10 +36,12 @@ f1 = evaluate()  # 运行模型并返回相应的结果
 
 # References
 ```bib
-@article{DataCLUE,
-  booktitle = {Arxiv},
-  title = {DataCLUE: A Benchmark Suite for Data-centric NLP,},
-  author = {Xu, Liang and Liu, Jiacheng and Pan, Xiang and Lu, Xiaojing and Hou, Xiaofeng},
-  year = {2021}
+@article{xu2021dataclue,
+      title={DataCLUE: A Benchmark Suite for Data-centric NLP}, 
+      author={Liang Xu and Jiacheng Liu and Xiang Pan and Xiaojing Lu and Xiaofeng Hou},
+      year={2021},
+      eprint={2111.08647},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
 }
 ```

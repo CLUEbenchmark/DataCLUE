@@ -18,6 +18,7 @@
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
 | [DataCLUE测评及规则](#DataCLUE测评及规则) | DataCLUE测评及规则 |
 | [数据集介绍](#数据集介绍) | 介绍数据集及示例 |
+| [工具集介绍](#工具集介绍) | 介绍与DataCLUE搭配的工具集 |
 | [数据处理方法简介](#数据处理方法简介) | 数据处理方法简介（附图）  |
 | [学习资料](#学习资料) | 文章、PPT、分享视频及选手方案 |
 | [联系方式与引用](#贡献与参与) | 如何参与项目或反馈问题|
@@ -137,17 +138,10 @@ TODO 这里是实验分析
  或者：
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
-### 运行simple_baseline直接生成可提交结果
-主要思路：
-1. 通过训练一个分类模型根据预测的熵找出数据中最有可能标签错误的样本，并丢弃；
-2. 使用数据增强提升数据量，即对输入文本的增强；
-3. 将标签定义增强后添加到训练集中增加数据量。比如标签定义买家抱怨商品了;标签定义增强->买家抱怨商品涨价了。 
-```
-环境：python 3.x
-进入到目录：cd baselines/simple_baseline
-首次运行前先安装包：pip install requirements.txt
-运行： python main.py
-```
+### baselines
+为了进一步促进社区发展，我们收集了相应的[baseline代码和说明](baselines)
+其中按照[单策略模型](baselines/single)和[多策略模型](baselines/multi)进行了分类
+可欢迎大家[贡献自己的方法](baselines/CONTRIBUTING.md)
 
 ## DataCLUE测评及规则
 ### 1.测评方式：
@@ -197,6 +191,25 @@ TODO 这里是实验分析
     {"id": 10005, "label": "22", "sentence": "我有两个退货，麻烦同意下", "label_des": "表示需要退货退款"}
     {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
      
+## 工具集介绍
+
+
+为了方便上手，我们开发了[DataCLUE Toolkit (dckit)](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
+
+### 安装
+`pip install -e .`
+### 使用
+基于dckit你只需要关注于数据处理部分即可
+
+```python
+from dckit import read_datasets, random_split_data, evaluate
+
+data = read_datasets()
+# TODO 对数据进行处理
+
+random_split_data(data)
+f1 = evaluate()
+```
 
 ## 数据处理方法简介
 TODO 数据处理方法简介

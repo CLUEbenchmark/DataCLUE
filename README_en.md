@@ -15,6 +15,7 @@ You can get the Chinese Version at [README.md](./README.md)
 | [Baseline and How to Rrun](#Baseline)                     | Including Baseline that we support                                |
 | [DataCLUE Evaluation](#DataCLUE_Evaluation)               | How we evaluate the final result                                  |
 | [Dataset Description](#Dataset_Description)               | Dataset Description and Samples                                   |
+| [Toolkit Description](#Toolkit_Description)               | Introduce the tool set paired with DataCLUE |
 | [Related Works and Reference](#Reference)                 | Related Works and Reference(including artical, slides, solutions) |
 | [Contact Information and Citation](#Contact_Information)                   | How can you submit and contribute to this project and competition |
 
@@ -202,7 +203,22 @@ This data set contains 118 categories of text about customer intent. Such as: co
     {"id": 10005, "label": "22", "sentence": "我有两个退货，麻烦同意下", "label_des": "表示需要退货退款"}
     {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
 
+## Toolkit_Description
+To make it easier to get started, we have developed [DataCLUE Toolkit (dckit)](dckit), which provides basic data reading, storage and evaluation functions. 
+Using dckit for development can also be more convenient to integrate with other algorithms.
+### Installation
+`pip install -e .`
+### Usage
 
+```python
+from dckit import read_datasets, random_split_data, evaluate
+
+data = read_datasets()
+# TODO data processing
+
+random_split_data(data)
+f1 = evaluate()
+```
 ## Reference
 
 1. <a href='https://www.bilibili.com/video/av587353739/'>Data-Centic AI by Andrew NG</a>
