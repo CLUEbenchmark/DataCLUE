@@ -77,6 +77,35 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
     Train/Dev: 含有噪声的数据，都含有一定比例有标注错误的标签；
     Test_public：高质量数据（标注准确率95%或以上），用于评估改进数据集算法的最新效果，不能用于模型训练。
 
+## 工具集(dckit)介绍
+
+dckit: 用于改进数据集的工具集
+
+为了方便上手，我们开发了[DataCLUE Toolkit (dckit)](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
+
+### 安装
+`pip install -e .`
+### 使用
+基于dckit你只需要关注于数据处理部分即可
+
+```python
+from dckit import read_datasets, random_split_data, evaluate
+
+data = read_datasets()
+# TODO 对数据进行处理
+
+random_split_data(data)
+f1 = evaluate()
+```
+
+### 改进数据集的baselines
+
+为了进一步促进社区发展，我们收集了相应的[baseline代码和说明](baselines)
+其中按照[单策略模型](baselines/single)和[多策略模型](baselines/multi)进行了分类
+可欢迎大家[贡献自己的方法](baselines/CONTRIBUTING.md)
+
+
+
 ## 实验结果
 |    | IFLYTEK(F1 Score, macro)     | 
 | :----:| :----:  | 
@@ -118,6 +147,8 @@ TODO 这里是实验分析
 
 ## 基线模型及运行
 
+即运行固定的模型和代码，来训练和在公开测试集上做预测
+
 ### 一键运行.基线模型与代码 Baseline with codes
     使用方式：
     1、克隆项目 
@@ -138,11 +169,6 @@ TODO 这里是实验分析
  或者：
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
-### baselines
-为了进一步促进社区发展，我们收集了相应的[baseline代码和说明](baselines)
-其中按照[单策略模型](baselines/single)和[多策略模型](baselines/multi)进行了分类
-可欢迎大家[贡献自己的方法](baselines/CONTRIBUTING.md)
-
 ## DataCLUE测评及规则
 ### 1.测评方式：
 修改训练集和验证集，并将压缩包上传到<a href='https://www.CLUEbenchmarks.com'>CLUE benchmark</a>
@@ -190,26 +216,6 @@ TODO 这里是实验分析
     {"id": 10004, "label": "23", "sentence": "刚好昨天拍少了一件，那我退了重新拍吧", "label_des": "表示要重拍"}
     {"id": 10005, "label": "22", "sentence": "我有两个退货，麻烦同意下", "label_des": "表示需要退货退款"}
     {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
-     
-## 工具集介绍
-
-
-为了方便上手，我们开发了[DataCLUE Toolkit (dckit)](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
-
-### 安装
-`pip install -e .`
-### 使用
-基于dckit你只需要关注于数据处理部分即可
-
-```python
-from dckit import read_datasets, random_split_data, evaluate
-
-data = read_datasets()
-# TODO 对数据进行处理
-
-random_split_data(data)
-f1 = evaluate()
-```
 
 ## 数据处理方法简介
 TODO 数据处理方法简介
