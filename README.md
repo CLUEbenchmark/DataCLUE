@@ -1,4 +1,7 @@
 # DataCLUE
+
+**You can get the english version of [README](./README_en.md).**
+
 以数据为中心的AI测评(DataCLUE)
 
 DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
@@ -17,7 +20,7 @@ DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
 | [数据集介绍](#数据集介绍) | 介绍数据集及示例 |
 | [数据处理方法简介](#数据处理方法简介) | 数据处理方法简介（附图）  |
 | [学习资料](#学习资料) | 文章、PPT、分享视频及选手方案 |
-| [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
+| [联系方式与引用](#贡献与参与) | 如何参与项目或反馈问题|
 
 
 ### DataCLUE测评.重要更新
@@ -201,12 +204,22 @@ TODO 数据处理方法简介
 ## 学习资料
 1、<a href='https://www.bilibili.com/video/av587353739/'>吴恩达新课：从以模型为中心到以数据为中心的AI（1小时）</a>
 
-## 贡献与参与
+## 联系方式与引用
    添加微信入DataCLUE群:
-   <img src="./resources/img/teamgroup.jpeg"  width="45%" height="45%" />
+   <!-- <img src="./resources/img/teamgroup.jpeg"  width="45%" height="45%" /> -->
    <img src="./resources/img/bxu.jpg"  width="30%" height="30%" />   
 
    QQ群:836811304
    
-## 参考资料
-添加中。。。
+如果您觉得DataCLUE有用，并希望引用，您可以使用如下格式
+```
+@article{xu2021dataclue,
+      title={DataCLUE: A Benchmark Suite for Data-centric NLP}, 
+      author={Liang Xu and Jiacheng Liu and Xiang Pan and Xiaojing Lu and Xiaofeng Hou},
+      year={2021},
+      eprint={2111.08647},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
+。
