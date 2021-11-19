@@ -6,29 +6,31 @@ from sklearn.model_selection import train_test_split
 path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
 
 
-def read_datasets(dataset='CIC'):
+def read_datasets(dataset='cic'):
     """
     根据输入的数据名称读取数据
     参数：
-        dataset： 数据集名称，当前只支持CIC
+        dataset： 数据集名称，当前支持CIC和TNEWS
     输出：
         full_data： 字典形式存储的数据，包括：
                     - 'json': json数据的每一行，如 {"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
                     这里为了统一输入输出没有区分train和dev了
                     - 'info': 标签号好描述的对应关系，如{79:'买家咨询商品规格数量'}
     """
-    if dataset == 'CIC':
+    dataset = dataset.lower()
+    if dataset in ['cic', 'tnews']:
         json_data = []
         for data_type in ['train', 'dev']:
-            for line in open('{}/datasets/raw_cic/{}.json'.format(path, data_type), 'r', encoding='utf-8'):
+            for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, data_type), 'r', encoding='utf-8'):
                 # line = {"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
                 one = json.loads(line)
                 json_data.append(one)
 
         label_info = {}
-        with open('{}/datasets/raw_cic/labels.txt'.format(path), 'r', encoding='utf-8') as fa:
-            for idx, line in enumerate(fa.readlines()):
-                label_info[idx] = line
+        if dataset == 'cic':
+            with open('{}/datasets/raw_{}/labels.txt'.format(path, dataset), 'r', encoding='utf-8') as fa:
+                for idx, line in enumerate(fa.readlines()):
+                    label_info[idx] = line
         full_data = {'json': json_data, 'info': label_info}
         return full_data
     else:

@@ -154,7 +154,7 @@ class TnewsProcessor(DataProcessor):
     def get_test_examples(self, data_dir):
         """See base class."""
         return self._create_examples(
-            self._read_json(os.path.join(data_dir, "test.json")), "test")
+            self._read_json(os.path.join(data_dir, "test_public.json")), "test")
 
     def get_labels(self):
         """See base class."""
@@ -218,7 +218,7 @@ class IflytekProcessor(DataProcessor):
 
 
 class CICProcessor(DataProcessor):
-    """Processor for the IFLYTEK data set (CLUE version)."""
+    """Processor for the CIC data set (CLUE version)."""
 
     def get_train_examples(self, data_dir):
         """See base class."""

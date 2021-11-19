@@ -5,19 +5,10 @@ import numpy as np
 
 path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
 
-# print(path)
-cmds = [
-    'rm -rf {}/output_dir/bert'.format(path),
-    'rm -f {}/datasets/cic/cached*'.format(path),
-    'cd {}/baselines/models_pytorch/classifier_pytorch'.format(path),
-    'bash run_classifier_cic.sh',
-    'bash run_classifier_cic.sh predict',
-]
 
-
-def calc_f1():
+def calc_f1(dataset='cic'):
     y_true = []
-    for line in open('{}/datasets/raw_cic/test_public.json'.format(path), 'r', encoding='utf-8'):
+    for line in open('{}/datasets/raw_{}/test_public.json'.format(path, dataset.lower()), 'r', encoding='utf-8'):
         y_true.append(json.loads(line)['label'])
     y_pred = []
     for line in open('{}/output_dir/bert/test_prediction.json'.format(path), 'r', encoding='utf-8'):
@@ -27,6 +18,13 @@ def calc_f1():
     return f1_macro
 
 
-def evaluate():
+def evaluate(dataset='cic'):
+    cmds = [
+        'rm -rf {}/output_dir/bert'.format(path),
+        'rm -f {}/datasets/{}/cached*'.format(path, dataset),
+        'cd {}/baselines/models_pytorch/classifier_pytorch'.format(path),
+        'bash run_classifier_{}.sh'.format(dataset),
+        'bash run_classifier_{}.sh predict'.format(dataset),
+    ]
     os.system('&&'.join(cmds))
-    return calc_f1()
+    return calc_f1(dataset.lower())
