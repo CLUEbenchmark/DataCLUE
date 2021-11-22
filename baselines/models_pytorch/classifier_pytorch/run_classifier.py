@@ -224,7 +224,7 @@ def predict(args, model, tokenizer, label_list, prefix=""):
     label_map = {i: label for i, label in enumerate(label_list)}
 
     for pred_task, pred_output_dir in zip(pred_task_names, pred_outputs_dirs):
-        pred_dataset = load_and_cache_examples(args, pred_task, tokenizer, data_type='test')
+        pred_dataset = load_and_cache_examples(args, pred_task, tokenizer, data_type='test')  # train
         if not os.path.exists(pred_output_dir) and args.local_rank in [-1, 0]:
             os.makedirs(pred_output_dir)
 

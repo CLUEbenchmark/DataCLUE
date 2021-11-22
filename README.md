@@ -1,7 +1,9 @@
-# DataCLUE
-以数据为中心的AI测评(DataCLUE)
+## <a href='https://arxiv.org/abs/2111.08647'>DataCLUE: A Benchmark Suite for Data-centric NLP</a>
 
-DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
+**You can get the english version of [README](./README_en.md).**
+
+### <a href='https://docs.qq.com/doc/p/51a1f46f64a72bc2ac0633427dc59d6e8d1b8d0a?dver=2.1.27277463'>DataCLUE介绍文章.中文版</a>
+
 
 ## 内容导引
 | 章节 | 描述 |
@@ -15,9 +17,25 @@ DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
 | [DataCLUE测评及规则](#DataCLUE测评及规则) | DataCLUE测评及规则 |
 | [数据集介绍](#数据集介绍) | 介绍数据集及示例 |
+| [工具集介绍](#工具集介绍) | 介绍与DataCLUE搭配的工具集 |
 | [数据处理方法简介](#数据处理方法简介) | 数据处理方法简介（附图）  |
 | [学习资料](#学习资料) | 文章、PPT、分享视频及选手方案 |
-| [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
+| [联系方式与引用](#贡献与参与) | 如何参与项目或反馈问题|
+
+## Update
+- 20211122  增加了 IFLYTEK数据集
+- 20211119  增加了 TNEWS 数据集
+## 简介
+以数据为中心（Data-centric）的AI，是一种新型的AI探索方向。它的核心问题是如何通过系统化的改造你的数据（无论是输入或者标签）来提高最终效果。
+传统的AI是以模型为中心（Model-centric）的，主要考虑的问题是如何通过改造或优化模型来提高最终效果，它通常建立在一个比较固定的数据集上。
+最新的数据显示超过90%的论文都是以模型为中心的，通过模型创新或学习方法改进提高效果，即使不少改进影响可能效果并不是特别明显。有些人认为当前的人工智能领域，
+无论是自然语言处理（如BERT） 或计算机视觉(ResNet)， 已经存在很多成熟高效模型，并且模型可以很容易从开源网站如github获得；而与此同时，工业界实际落地
+过程中可能有80%的时间用于 清洗数据、构建高质量数据集，或在迭代过程中获得更多数据，从而提升模型效果。正是看到了这种巨大的差别，在吴恩达等人的推动下这种
+以数据为中心 （Data-centric）的AI进一步的系统化，并成为一个有具有巨大实用价值方法论。
+
+DataCLUE是一个以数据为中心的AI测评。它基于CLUE benchmark，结合Data-centric的AI的典型特征，进一步将Data-centric的AI应用于
+NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centric的AI。在原始数据集外，它通过提供额外的高价值的数据和数据和模型分析报告（增值服务）的形式，
+使得融入人类的AI迭代过程（Human-in-the-loop AI pipeline)变得更加高效，并能较大幅度的提升最终效果。
 
 
 ### DataCLUE测评.重要更新
@@ -35,29 +53,6 @@ DataCLUE: A Data-centric Evaluation Benchmark for Chinese Language
     2、挑战性高：训练集train、验证集dev，都具有高比例的错误标注的数据。公开测试集标注准确率高（超过95%）。
     
     3、资源消耗低：实验周期快，计算成本低。GPU环境单次实验3分钟完成；CPU环境也可较短时间完成训练。
-    
-    「开启双周赛和奖励」
-    
-    1、产生办法：每个月1号～15日、16号～30日为两个周赛期。15日、30日晚上9点为双周赛冠军产生时间。冠军从赛期中新提交队伍的最高分中产生。
-    
-    2、奖励：
-    
-    1）证书：可在CLUE官网在线访问的「双周赛冠军证书」；
-    
-    2）奖金：600元双周赛冠军现金奖励。
-
-
-## 简介
-以数据为中心（Data-centric）的AI，是一种新型的AI探索方向。它的核心问题是如何通过系统化的改造你的数据（无论是输入或者标签）来提高最终效果。
-传统的AI是以模型为中心（Model-centric）的，主要考虑的问题是如何通过改造或优化模型来提高最终效果，它通常建立在一个比较固定的数据集上。
-最新的数据显示超过90%的论文都是以模型为中心的，通过模型创新或学习方法改进提高效果，即使不少改进影响可能效果并不是特别明显。有些人认为当前的人工智能领域，
-无论是自然语言处理（如BERT） 或计算机视觉(ResNet)， 已经存在很多成熟高效模型，并且模型可以很容易从开源网站如github获得；而与此同时，工业界实际落地
-过程中可能有80%的时间用于 清洗数据、构建高质量数据集，或在迭代过程中获得更多数据，从而提升模型效果。正是看到了这种巨大的差别，在吴恩达等人的推动下这种
-以数据为中心 （Data-centric）的AI进一步的系统化，并成为一个有具有巨大实用价值方法论。
-
-DataCLUE是一个以数据为中心的AI测评。它基于CLUE benchmark，结合Data-centric的AI的典型特征，进一步将Data-centric的AI应用于
-NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centric的AI。在原始数据集外，它通过提供额外的高价值的数据和数据和模型分析报告（增值服务）的形式，
-使得融入人类的AI迭代过程（Human-in-the-loop AI pipeline)变得更加高效，并能较大幅度的提升最终效果。
 
 
 ## 任务描述
@@ -66,12 +61,41 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 参与测评者需提交修改后的训练集和验证的压缩包。
 
 ## 任务描述和统计
-| Corpus   | Train     | Dev  |Test | Label Defintion  | Test_public(High Quality Data) | Data & Model Analysis Report  |
-| :----:| :----:  |:----:  |:----:  |:----:  |:----:  |:----:  |
-|   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | Stage 1 & 2 |
-
+| Corpus   | Train     | Dev  |Test | Label Defintion  | Test_public(High Quality Data)   |
+| :----:| :----:  |:----:  |:----:  |:----:  |:----:  |
+|   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | 
+|   TNEWS    | 53360 | 10000 | >=3000 |Stage 1 | Stage 2 | 
+|   IFLYTEK    | 10134 | 2600 | >=3000 |Stage 1 | Stage 2 |
     Train/Dev: 含有噪声的数据，都含有一定比例有标注错误的标签；
     Test_public：高质量数据（标注准确率95%或以上），用于评估改进数据集算法的最新效果，不能用于模型训练。
+
+
+## 改进数据集的baselines
+
+为了进一步促进社区发展，我们收集了相应的[baseline代码和说明](baselines)
+其中按照[单策略模型](baselines/single)和[多策略模型](baselines/multi)进行了分类
+可欢迎大家[贡献自己的方法](baselines/CONTRIBUTING.md)
+
+## 工具集(dckit)介绍
+
+dckit: 用于改进数据集的工具集
+
+为了方便上手，我们开发了[DataCLUE Toolkit (dckit)](dckit)，提供了基本的数据读取和存储以及评测功能。使用dckit进行开发也能够更加方便与其它算法进行整合。
+
+#### 安装
+`pip install -e .`
+#### 使用
+基于dckit你只需要关注于数据处理部分即可
+
+```python
+from dckit import read_datasets, random_split_data, evaluate
+
+data = read_datasets()
+# TODO 对数据进行处理
+
+random_split_data(data)
+f1 = evaluate()
+```
 
 ## 实验结果
 |    | IFLYTEK(F1 Score, macro)     | 
@@ -82,6 +106,8 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 |   Data-centric | ?    | 
 
    <img src="./resources/img/improve.jpeg"  width="80%" height="80%" />
+
+ 更多详细的实验结果，见：论文和介绍文章
 
 ## 实验分析 
 TODO 这里是实验分析
@@ -114,6 +140,8 @@ TODO 这里是实验分析
 
 ## 基线模型及运行
 
+即运行固定的模型和代码，来训练和在公开测试集上做预测
+
 ### 一键运行.基线模型与代码 Baseline with codes
     使用方式：
     1、克隆项目 
@@ -125,24 +153,15 @@ TODO 这里是实验分析
            cd ./baselines/models_pytorch/classifier_pytorch
     3、运行对应任务的脚本(GPU方式): 会自动下载模型和任务数据并开始运行。
        bash run_classifier_xxx.sh
-       如运行: bash run_classifier_cic.sh 会开始cic任务的训练。
+       1）运行: bash run_classifier_cic.sh 会开始cic任务的训练。
        训练完后也会得到在验证集上的效果，见 ./output_dir/bert/checkpoint_eval_results.txt
-        运行: bash run_classifier_cic.sh predict 会在测试集上做预测，并且生成预测文件，见: /output_dir/bert/test_prediction.json
+       2）运行: bash run_classifier_cic.sh predict 会在测试集上做预测，并且生成预测文件，见: /output_dir/bert/test_prediction.json
+       3）得到了test_prediction.json，使用下面的脚本获得在公开测试集上的效果(test_public.json) 
+       
+       <a href='https://github.com/CLUEbenchmark/DataCLUE/blob/master/baselines/models_pytorch/classifier_pytorch/compute_f1.py'>compute_f1.py</a>
  或者：
  转到[colab链接](https://colab.research.google.com/drive/1NSoVeuiggRTfLP37Np6mFdbo8kjYWapZ?usp=sharing) 直接运行 并查看训练结果
   
-### 运行simple_baseline直接生成可提交结果
-主要思路：
-1. 通过训练一个分类模型根据预测的熵找出数据中最有可能标签错误的样本，并丢弃；
-2. 使用数据增强提升数据量，即对输入文本的增强；
-3. 将标签定义增强后添加到训练集中增加数据量。比如标签定义买家抱怨商品了;标签定义增强->买家抱怨商品涨价了。 
-```
-环境：python 3.x
-进入到目录：cd baselines/simple_baseline
-首次运行前先安装包：pip install requirements.txt
-运行： python main.py
-```
-
 ## DataCLUE测评及规则
 ### 1.测评方式：
 修改训练集和验证集，并将压缩包上传到<a href='https://www.CLUEbenchmarks.com'>CLUE benchmark</a>
@@ -190,7 +209,6 @@ TODO 这里是实验分析
     {"id": 10004, "label": "23", "sentence": "刚好昨天拍少了一件，那我退了重新拍吧", "label_des": "表示要重拍"}
     {"id": 10005, "label": "22", "sentence": "我有两个退货，麻烦同意下", "label_des": "表示需要退货退款"}
     {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
-     
 
 ## 数据处理方法简介
 TODO 数据处理方法简介
@@ -198,12 +216,21 @@ TODO 数据处理方法简介
 ## 学习资料
 1、<a href='https://www.bilibili.com/video/av587353739/'>吴恩达新课：从以模型为中心到以数据为中心的AI（1小时）</a>
 
-## 贡献与参与
+## 联系方式与引用
    添加微信入DataCLUE群:
-   <img src="./resources/img/teamgroup.jpeg"  width="45%" height="45%" />
+   <!-- <img src="./resources/img/teamgroup.jpeg"  width="45%" height="45%" /> -->
    <img src="./resources/img/bxu.jpg"  width="30%" height="30%" />   
 
    QQ群:836811304
    
-## 参考资料
-添加中。。。
+如果您觉得DataCLUE有用，并希望引用，您可以使用如下格式
+```
+@article{xu2021dataclue,
+      title={DataCLUE: A Benchmark Suite for Data-centric NLP}, 
+      author={Liang Xu and Jiacheng Liu and Xiang Pan and Xiaojing Lu and Xiaofeng Hou},
+      year={2021},
+      eprint={2111.08647},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
