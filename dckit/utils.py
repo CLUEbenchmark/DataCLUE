@@ -18,7 +18,7 @@ def read_datasets(dataset='cic'):
                     - 'info': 标签号好描述的对应关系，如{79:'买家咨询商品规格数量'}
     """
     dataset = dataset.lower()
-    if dataset in ['cic', 'tnews']:
+    if dataset in ['cic', 'tnews', 'iflytek']:
         json_data = []
         for data_type in ['train', 'dev']:
             for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, data_type), 'r', encoding='utf-8'):
@@ -31,6 +31,10 @@ def read_datasets(dataset='cic'):
             with open('{}/datasets/raw_{}/labels.txt'.format(path, dataset), 'r', encoding='utf-8') as fa:
                 for idx, line in enumerate(fa.readlines()):
                     label_info[idx] = line
+        elif dataset == 'iflytek':
+            for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, 'labels'), 'r', encoding='utf-8'):
+                one = json.loads(line)
+                label_info[one['label']] = one['label_des']
         full_data = {'json': json_data, 'info': label_info}
         return full_data
     else:

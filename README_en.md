@@ -67,6 +67,8 @@ The submission should be the modified training and validation dataset.
 | Corpus | Train |  Dev  |  Test  | Label Defintion | Test_public(High Quality Data) | Data & Model Analysis Report |
 | :----: | :---: | :---: | :----: | :-------------: | :----------------------------: | :--------------------------: |
 |  CIC   | 10000 | 2000  | >=3000 |     Stage 1     |            Stage 2             |         Stage 1 & 2          |
+|   TNEWS    | 53360 | 10000 | >=3000 |Stage 1 | Stage 2 | 
+|   IFLYTEK    | 10134 | 2600 | >=3000 |Stage 1 | Stage 2 |
 
     Train/Dev: Noisy Data.
     Test_public: Hign Quality Data（with correction above 95%) can only be used to model test and should not be used to hyperparameter tuning and model training.
