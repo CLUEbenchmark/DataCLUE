@@ -2,7 +2,10 @@ from tqdm import tqdm
 from dckit import read_datasets, random_split_data, evaluate
 from scipy.stats import entropy
 import numpy as np
-from classifier import get_prediction
+import os, sys
+path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
+sys.path.append(path)
+from baselines.single.delete_noise.classifier import get_prediction
 
 
 def find_max_entropy(predicted_probabilities):
@@ -11,7 +14,7 @@ def find_max_entropy(predicted_probabilities):
 
 
 def delete_noise(data, delete_num=100):
-    numpy_array_of_predicted_probabilities = get_prediction()
+    numpy_array_of_predicted_probabilities = get_prediction(data)
     ordered_label_errors = find_max_entropy(numpy_array_of_predicted_probabilities)
 
     json_data = data['json']

@@ -36,7 +36,7 @@ class MyDataset(torch.utils.data.Dataset):
         return len(self.labels)
 
 
-def get_prediction():
+def get_prediction(data):
     """
     训练一个模型，得到数据点上的标签预测：
     1） 加载数据；
@@ -46,15 +46,19 @@ def get_prediction():
     """
     # 1、加载所有数据、标签到列表 all_text, all_label,all_id
     all_text, all_label, all_id = [], [], []
-    for line in open('{}/../../datasets/raw_cic/train.json'.format(path), 'r', encoding='utf-8'):
-        # train.json-->{"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
-        all_text.append(json.loads(line)['sentence'])
-        all_label.append(int(json.loads(line)['label']))
-        all_id.append(int(json.loads(line)['id']))
-    for line in open('{}/../../datasets/raw_cic/dev.json'.format(path), 'r', encoding='utf-8'):
-        all_text.append(json.loads(line)['sentence'])
-        all_label.append(int(json.loads(line)['label']))
-        all_id.append(int(json.loads(line)['id']))
+    # for line in open('{}/../../datasets/raw_{}/train.json'.format(path, dataset), 'r', encoding='utf-8'):
+    #     # train.json-->{"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
+    #     all_text.append(json.loads(line)['sentence'])
+    #     all_label.append(int(json.loads(line)['label']))
+    #     all_id.append(int(json.loads(line)['id']))
+    # for line in open('{}/../../datasets/raw_{}/dev.json'.format(path, dataset), 'r', encoding='utf-8'):
+    #     all_text.append(json.loads(line)['sentence'])
+    #     all_label.append(int(json.loads(line)['label']))
+    #     all_id.append(int(json.loads(line)['id']))
+    for idx, line in enumerate(data['json']):
+        all_text.append(line['sentence'])
+        all_label.append(int(line['label']))
+        all_id.append(idx)
     # 加载标签定义增强后的数据
     # label_data.json--->{"id": -1, "sentence": "买家抱怨商品了", "label_des": "买家抱怨商品涨价了\n", "label": 0}
     label_text, label_label = [], []

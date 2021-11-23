@@ -35,6 +35,11 @@ def read_datasets(dataset='cic'):
             for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, 'labels'), 'r', encoding='utf-8'):
                 one = json.loads(line)
                 label_info[one['label']] = one['label_des']
+        elif dataset == 'tnews':
+            label_info = {}
+            for line in json_data:
+                if line['label'] not in label_info:
+                    label_info[line['label']] = line['label_desc']
         full_data = {'json': json_data, 'info': label_info}
         return full_data
     else:
