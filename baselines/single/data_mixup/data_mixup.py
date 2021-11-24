@@ -18,7 +18,7 @@ def data_mix(data, num_mix=3):
         sentence_by_class[tmp['label']].append(tmp['sentence'])
     idx = 0
     for classes, sentences in tqdm(sentence_by_class.items()):
-        for _ in range(10000//118):
+        for _ in range(len(json_data)//len(data['info'])):
             random.shuffle(sentences)
             sentence = '。'.join(sentences[:num_mix])
             dic = {'id': idx, 'sentence': sentence, 'label': classes, 'label_des': label_desc_map[classes]}
