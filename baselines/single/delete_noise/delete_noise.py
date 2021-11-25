@@ -22,7 +22,7 @@ def delete_noise(data, delete_num=100):
     for idx, tmp in enumerate(tqdm(json_data)):
         # 每一句都给他扩展
         if idx in ordered_label_errors[:delete_num]:  # and idx not in correct_id:
-            print(tmp['id'], tmp['sentence'], tmp['label_des'])
+            # print(tmp['sentence'], tmp['label_des'])
             continue
         new_json.append(tmp)
     data['json'] = new_json

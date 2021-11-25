@@ -46,7 +46,7 @@ def read_datasets(dataset='cic'):
         raise NotImplementedError
 
 
-def random_split_data(data, test_size=2000, seed=0):
+def random_split_data(data, test_size=2000, seed=0, dataset='cic'):
     json_data = data['json']
     labels = []
     for line in json_data:
@@ -54,13 +54,13 @@ def random_split_data(data, test_size=2000, seed=0):
     train_idx, test_idx, _, _ = train_test_split(range(len(labels)), labels, stratify=labels,
                                                  shuffle=True, test_size=test_size, random_state=seed)
 
-    f = open('{}/datasets/cic/train.json'.format(path), 'w', encoding='utf-8')
+    f = open('{}/datasets/{}/train.json'.format(path, dataset), 'w', encoding='utf-8')
     for idx in train_idx:
         dic = json_data[idx]
         str_sen = json.dumps(dic, ensure_ascii=False)
         f.write(str_sen + '\n')
 
-    f = open('{}/datasets/cic/dev.json'.format(path), 'w', encoding='utf-8')
+    f = open('{}/datasets/{}/dev.json'.format(path, dataset), 'w', encoding='utf-8')
     for idx in test_idx:
         dic = json_data[idx]
         str_sen = json.dumps(dic, ensure_ascii=False)
