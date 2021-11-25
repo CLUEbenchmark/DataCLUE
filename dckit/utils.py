@@ -10,7 +10,7 @@ def read_datasets(dataset='cic'):
     """
     根据输入的数据名称读取数据
     参数：
-        dataset： 数据集名称，当前支持CIC和TNEWS
+        dataset： 数据集名称
     输出：
         full_data： 字典形式存储的数据，包括：
                     - 'json': json数据的每一行，如 {"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
@@ -27,19 +27,9 @@ def read_datasets(dataset='cic'):
                 json_data.append(one)
 
         label_info = {}
-        if dataset == 'cic':
-            with open('{}/datasets/raw_{}/labels.txt'.format(path, dataset), 'r', encoding='utf-8') as fa:
-                for idx, line in enumerate(fa.readlines()):
-                    label_info[idx] = line
-        elif dataset == 'iflytek':
-            for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, 'labels'), 'r', encoding='utf-8'):
-                one = json.loads(line)
-                label_info[one['label']] = one['label_des']
-        elif dataset == 'tnews':
-            label_info = {}
-            for line in json_data:
-                if line['label'] not in label_info:
-                    label_info[line['label']] = line['label_desc']
+        for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, 'labels'), 'r', encoding='utf-8'):
+            one = json.loads(line)
+            label_info[one['label']] = one['label_des']
         full_data = {'json': json_data, 'info': label_info}
         return full_data
     else:
