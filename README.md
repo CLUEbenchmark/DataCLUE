@@ -64,8 +64,11 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 | Corpus   | Train     | Dev  |Test | Label Defintion  | Test_public(High Quality Data)   |
 | :----:| :----:  |:----:  |:----:  |:----:  |:----:  |
 |   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | 
-|   TNEWS    | 53360 | 10000 | >=3000 |Stage 1 | Stage 2 | 
-|   IFLYTEK    | 10134 | 2600 | >=3000 |Stage 1 | Stage 2 |
+|   TNEWS    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | 
+|   IFLYTEK    | 1000 | 2000 | >=3000 |Stage 1 | Stage 2 |
+|   AFQMC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
+|   QBQTC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
+
     Train/Dev: 含有噪声的数据，都含有一定比例有标注错误的标签；
     Test_public：高质量数据（标注准确率95%或以上），用于评估改进数据集算法的最新效果，不能用于模型训练。
 

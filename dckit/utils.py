@@ -32,11 +32,38 @@ def read_datasets(dataset='cic'):
             label_info[one['label']] = one['label_des']
         full_data = {'json': json_data, 'info': label_info}
         return full_data
+    elif dataset in ['afqmc', 'qbqtc']:
+        json_data = []
+        for data_type in ['train', 'dev']:
+            for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, data_type), 'r', encoding='utf-8'):
+                # line = {"label": "79", "sentence1": "一斤大概有多少个", "sentence2": "买家咨询商品规格数量"}
+                one = json.loads(line)
+                json_data.append(one)
+        label_info = {}
+        full_data = {'json': json_data, 'info': label_info}
+        return full_data
+    elif dataset in ['cluener']:
+        """
+        {"text": "浙商银行企业信贷部叶老桂博士则从另一个角度对五道门槛进行了解读。叶老桂认为，对目前国内商业银行而言，", 
+        "label": {"name": {"叶老桂": [[9, 11]]}, "company": {"浙商银行": [[0, 3]]}}}
+        {"text": "生生不息CSOL生化狂潮让你填弹狂扫", "label": {"game": {"CSOL": [[4, 7]]}}}
+        """
+        json_data = []
+        for data_type in ['train', 'dev']:
+            for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, data_type), 'r', encoding='utf-8'):
+                # line = {"label": "79", "sentence1": "一斤大概有多少个", "sentence2": "买家咨询商品规格数量"}
+                one = json.loads(line)
+                json_data.append(one)
+        label_info = {}
+        full_data = {'json': json_data, 'info': label_info}
+        return full_data
     else:
         raise NotImplementedError
 
 
 def random_split_data(data, test_size=2000, seed=0, dataset='cic'):
+    if dataset == 'cluener':
+        raise NotImplementedError
     json_data = data['json']
     labels = []
     for line in json_data:

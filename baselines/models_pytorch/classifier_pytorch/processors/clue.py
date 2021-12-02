@@ -270,7 +270,7 @@ class AfqmcProcessor(DataProcessor):
     def get_test_examples(self, data_dir):
         """See base class."""
         return self._create_examples(
-            self._read_json(os.path.join(data_dir, "test.json")), "test")
+            self._read_json(os.path.join(data_dir, "test_public.json")), "test")
 
     def get_labels(self):
         """See base class."""
