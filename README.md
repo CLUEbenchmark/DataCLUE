@@ -65,7 +65,7 @@ NLP领域，融入文本领域的特定并创造性丰富和发展了Data-centri
 | :----:| :----:  |:----:  |:----:  |:----:  |:----:  |
 |   CIC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | 
 |   TNEWS    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 | 
-|   IFLYTEK    | 1000 | 2000 | >=3000 |Stage 1 | Stage 2 |
+|   IFLYTEK    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
 |   AFQMC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
 |   QBQTC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
 
