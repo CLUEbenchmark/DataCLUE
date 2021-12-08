@@ -102,15 +102,16 @@ def get_prediction(data):
         training_args = TrainingArguments(
             # output directory
             output_dir='../../tmpresults/tmpresult{}'.format(kf_id),
-            num_train_epochs=50,  # total number of training epochs
+            num_train_epochs=15,  # total number of training epochs
             per_device_train_batch_size=32,  # batch size per device during training
             per_device_eval_batch_size=32,  # batch size for evaluation
             warmup_steps=500,  # number of warmup steps for learning rate scheduler
             learning_rate=3e-4 if 'electra' in PRETRAIN else 2e-5,
             weight_decay=0.01,  # strength of weight decay
-            logging_dir='../../tmplogs',  # directory for storing logs
-            logging_steps=10,
-            evaluation_strategy="epoch",
+            save_total_limit=1,
+            # logging_dir='../../tmplogs',  # directory for storing logs
+            # logging_steps=10,
+            # evaluation_strategy="epoch",
         )
         model = AutoModelForSequenceClassification.from_pretrained(PRETRAIN, num_labels=118)
 
