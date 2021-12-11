@@ -2,7 +2,8 @@ from tqdm import tqdm
 from dckit import read_datasets, random_split_data, evaluate
 from scipy.stats import entropy
 import numpy as np
-import os, sys
+import os
+import sys
 path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
 sys.path.append(path)
 from baselines.single.delete_noise.classifier import get_prediction

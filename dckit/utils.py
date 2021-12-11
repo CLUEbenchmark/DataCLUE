@@ -32,7 +32,7 @@ def read_datasets(dataset='cic'):
             label_info[one['label']] = one['label_des']
         full_data = {'json': json_data, 'info': label_info}
         return full_data
-    elif dataset in ['afqmc', 'qbqtc']:
+    elif dataset in ['afqmc', 'qbqtc', 'triclue']:
         json_data = []
         for data_type in ['train', 'dev']:
             for line in open('{}/datasets/raw_{}/{}.json'.format(path, dataset, data_type), 'r', encoding='utf-8'):

@@ -158,11 +158,11 @@ class TnewsProcessor(DataProcessor):
 
     def get_labels(self):
         """See base class."""
-        labels = []
-        for i in range(17):
-            if i == 5 or i == 11:
-                continue
-            labels.append(str(100 + i))
+        labels = [str(i) for i in range(15)]
+        # for i in range(17):
+        #     if i == 5 or i == 11:
+        #         continue
+        #     labels.append(str(100 + i))
         return labels
 
     def _create_examples(self, lines, set_type):
@@ -172,7 +172,7 @@ class TnewsProcessor(DataProcessor):
             guid = "%s-%s" % (set_type, i)
             text_a = line['sentence']
             text_b = None
-            label = str(line['label']) if set_type != 'test' else "100"
+            label = str(line['label']) if set_type != 'test' else "0"
             examples.append(
                 InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples

@@ -1,13 +1,13 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICE"] = '1'
 from transformers import Trainer, TrainingArguments, AutoModelForSequenceClassification, AutoTokenizer
 import torch
-import json
 import numpy as np
-import os
 from datasets import load_metric
 from sklearn.model_selection import StratifiedKFold  # StratifiedKFold划分数据集的原理：划分后的训练集和验证集中类别分布尽量和原数据集一样
-from textda.data_expansion import data_expansion
 
 path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
+from baselines.single.data_aug.parallel_textda import parallel_expansion
 os.environ["TOKENIZERS_PARALLELISM"] = 'false'
 PRETRAIN = 'hfl/rbtl3'  # 加载的预训练模型的名称
 metric = load_metric("f1")  # 使用f1 score作为指标
@@ -20,7 +20,6 @@ def compute_metrics(eval_pred):
     return metric.compute(predictions=predictions, references=labels, average='macro')
 
 
-#
 class MyDataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
         self.encodings = encodings
@@ -46,15 +45,6 @@ def get_prediction(data):
     """
     # 1、加载所有数据、标签到列表 all_text, all_label,all_id
     all_text, all_label, all_id = [], [], []
-    # for line in open('{}/../../datasets/raw_{}/train.json'.format(path, dataset), 'r', encoding='utf-8'):
-    #     # train.json-->{"id": 13, "label": "79", "sentence": "一斤大概有多少个", "label_des": "买家咨询商品规格数量"}
-    #     all_text.append(json.loads(line)['sentence'])
-    #     all_label.append(int(json.loads(line)['label']))
-    #     all_id.append(int(json.loads(line)['id']))
-    # for line in open('{}/../../datasets/raw_{}/dev.json'.format(path, dataset), 'r', encoding='utf-8'):
-    #     all_text.append(json.loads(line)['sentence'])
-    #     all_label.append(int(json.loads(line)['label']))
-    #     all_id.append(int(json.loads(line)['id']))
     for idx, line in enumerate(data['json']):
         all_text.append(line['sentence'])
         all_label.append(int(line['label']))
@@ -69,8 +59,8 @@ def get_prediction(data):
     # 2、使用K折交叉验证训练，并在验证集上做预测：遍历每一折得到训练集和验证子集、数据增强、设置训练参数和数据进行训练、在验证集上进行预测
     dev_out = {}  # 带索引(index)的验证子集的列表
     dev_index = {}  # 带索引(index)的验证集的列表
-    kf = StratifiedKFold(n_splits=6)  # StratifiedKFold划分数据集的原理：划分后的训练集和验证集中类别分布尽量和原数据集一样
-    kf.get_n_splits(all_text, all_label)
+    kf = StratifiedKFold(n_splits=6, shuffle=True)  # StratifiedKFold划分数据集的原理：划分后的训练集和验证集中类别分布尽量和原数据集一样
+    # kf.get_n_splits(all_text, all_label)
     for kf_id, (train_index, test_index) in enumerate(kf.split(all_text, all_label)):
         # 2.1 得到训练和验证子集
         # kf_id:第几折；train_index, test_index这一折的训练、验证集。
@@ -81,15 +71,20 @@ def get_prediction(data):
         dev_index[kf_id] = test_index
 
         # 2.2 对训练数据进行数据扩增
-        new_train_text = []
-        new_train_label = []
-        for idx, tmp_text in enumerate(train_text):
-            sen_list = data_expansion(tmp_text, alpha_ri=0.1, alpha_rs=0, num_aug=5)
-            new_train_text.extend(sen_list)
-            new_train_label.extend([train_label[idx]] * len(sen_list))
-        train_text = new_train_text
-        train_label = new_train_label
+        # new_train_text = []
+        # new_train_label = []
+        # for idx, tmp_text in enumerate(train_text):
+        #     sen_list = data_expansion(tmp_text, alpha_ri=0.1, alpha_rs=0, num_aug=5)
+        #     new_train_text.extend(sen_list)
+        #     new_train_label.extend([train_label[idx]] * len(sen_list))
+        #
+        # train_text = new_train_text
+        # train_label = new_train_label
 
+        sen_list, label_list = parallel_expansion(train_text, train_label, alpha_ri=0.1, alpha_rs=0, num_aug=5)
+        train_text = sen_list
+        train_label = label_list
+        assert len(train_text) == len(train_label)
         # 2.3 设置使用的预训练模型，并设置tokenizer、数据集对象
         tokenizer = AutoTokenizer.from_pretrained(PRETRAIN, do_lower_case=True)
         train_encodings = tokenizer(train_text, truncation=True, padding=True, max_length=32)
@@ -102,8 +97,8 @@ def get_prediction(data):
         training_args = TrainingArguments(
             # output directory
             output_dir='../../tmpresults/tmpresult{}'.format(kf_id),
-            num_train_epochs=15,  # total number of training epochs
-            per_device_train_batch_size=32,  # batch size per device during training
+            num_train_epochs=50,  # total number of training epochs
+            per_device_train_batch_size=256,  # batch size per device during training
             per_device_eval_batch_size=32,  # batch size for evaluation
             warmup_steps=500,  # number of warmup steps for learning rate scheduler
             learning_rate=3e-4 if 'electra' in PRETRAIN else 2e-5,
@@ -113,7 +108,7 @@ def get_prediction(data):
             # logging_steps=10,
             # evaluation_strategy="epoch",
         )
-        model = AutoModelForSequenceClassification.from_pretrained(PRETRAIN, num_labels=118)
+        model = AutoModelForSequenceClassification.from_pretrained(PRETRAIN, num_labels=len(data['info']))
 
         # 2.5 利用实例化的训练对象进行训练（模型、训练参数、训练集、验证集、评价指标）
         trainer = Trainer(
