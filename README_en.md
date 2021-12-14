@@ -19,12 +19,6 @@ You can get the Chinese Version at [README.md](./README.md)
 | [Related Works and Reference](#Reference)                 | Related Works and Reference(including artical, slides, solutions) |
 | [Contact Information and Citation](#Contact_Information)                   | How can you submit and contribute to this project and competition |
 
-### DataCLUE Compection UPDATE!
-
-open bi-weekly competitions and bi-weekly competition rewards
-
-Dataset Optimization: How to get better results by improving the quality of the dataset without modifying the model and tranining process?
-
 DataCLUE has the following characteristics:
 
 1. Academic-Friendly: A more academically friendly public test set, test_public.json, has been added. Participants can do tests and experiments independently.
@@ -32,16 +26,6 @@ DataCLUE has the following characteristics:
 2. Highly Challenging: Both the training set train and the validation set dev have a high proportion of incorrectly labeled data. The labeling accuracy rate of the public test set is high (over 95%).
 
 3. Resource-Friendly: fast experiment cycle and low calculation cost. A single experiment in GPU environment can be completed in 3 minutes; CPU environment can also complete training in a short time.
-
-"Open Biweekly Competition and Rewards"
-
-1. Production method: The 1st to 15th and 16th to 30th of each month are two weekly competition periods. 9 pm on the 15th and 30th is the time for the biweekly championships to be produced. The champion is derived from the highest score of the newly submitted team during the competition period.
-
-2. Rewards:
-
-1) Certificate: "Biweekly Championship Certificate" that can be accessed online on the CLUE official website;
-
-2) Bonus: 600 yuan cash prize for the winner of the bi-weekly competition.
 
 ## Introduction
 
@@ -69,6 +53,9 @@ The submission should be the modified training and validation dataset.
 |  CIC   | 10000 | 2000  | >=3000 |     Stage 1     |            Stage 2             |         Stage 1 & 2          |
 |   TNEWS    | 53360 | 10000 | >=3000 |Stage 1 | Stage 2 | 
 |   IFLYTEK    | 10134 | 2600 | >=3000 |Stage 1 | Stage 2 |
+|   AFQMC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
+|   QBQTC    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
+|   TRICLUE    | 10000 | 2000 | >=3000 |Stage 1 | Stage 2 |
 
     Train/Dev: Noisy Data.
     Test_public: Hign Quality Data（with correction above 95%) can only be used to model test and should not be used to hyperparameter tuning and model training.
@@ -82,6 +69,9 @@ The submission should be the modified training and validation dataset.
 |                                                              Model-centric                                                              |           66.0           |
 |                                                              Data-centric                                                               |            ?             |
 
+For the experimental results, see [Single Strategy Results Summary](./baselines/single/README.md) and [Multi Strategy Results Summary](./baselines/multi/README.md)
+
+  For more detailed experimental results, see: Papers and Introduction Articles
 
 ## Result_Analysis
 
@@ -170,17 +160,6 @@ You can get a sample at <a href='./resources/dataclue_submit_examples/dataclue_s
 
 ###### 2.2 Data volume limitation: The total dataset size of training set and validation set cannot exceed 30,000 samples.
 
-### **3.Competition time: October 14, 2021 - January 12, 2022**
-
-1) Registration start and deadline: October 14, 2021-December 07, 2021
-2) Preliminary round: October 14, 2021-December 14, 2021. 
-   - The top 80 and surpassed Data-centric's baseline to enter the semi-finals. The initial players will also receive data and model analysis reports (referred to as value-added services)
-3) The training set & validation set are provided: October 14, 2021; 
-   - The submission portal is open: October 15, 2021; Online scores are updated once a day at 22 o'clock.
-4) Semi-finals: December 17, 2022-January 8, 2022. 
-   - The top 15 players in the semi-finals will enter the online judging for online defense.
-5) Online review: January 16, 2022 (2pm-5pm). 
-   - Final score: online score * 0.65 + online plan review * 0.35 Online program review: The program review is scored by examining the novelty, practicability and expressiveness of interpretation and defense of the submitted solutions by the participating teams, and scored by 5 review teachers; Each team has 10 minutes to explain the plan and 5 minutes to answer questions. The program review will be conducted in a live broadcast method.
 
 ### 4.Self Evaluation（f1 score）
 
@@ -193,7 +172,7 @@ You can get a sample at <a href='./resources/dataclue_submit_examples/dataclue_s
     print('f1_macro: {0}'.format(f1_macro))
 
 ## Dataset_Description
-
+### Single Setence Task
 1、Customer Intent Classification(CIC) 118 classes
 This data set contains 118 categories of text about customer intent. Such as: complaining about the price increase of the goods, expressing dissatisfaction/angry, expressing compliments/satisfaction, expressing no desire, expressing the correct address, etc.
 
@@ -204,6 +183,16 @@ This data set contains 118 categories of text about customer intent. Such as: co
     {"id": 10004, "label": "23", "sentence": "刚好昨天拍少了一件，那我退了重新拍吧", "label_des": "表示要重拍"}
     {"id": 10005, "label": "22", "sentence": "我有两个退货，麻烦同意下", "label_des": "表示需要退货退款"}
     {"id": 10006, "label": "4", "sentence": "第二件地址对的，一起发回四川哈", "label_des": "表示地址正确"}
+
+### Sentence Pair Task
+Examples:
+
+    {"label": "0", "sentence1": "名流置业集团股份有限公司广东区域中心", "sentence2": "名流置业集团广东区域中心-东莞名流置业有限公司怎么样名流置业集团广东区域中心-东莞名流置业有限公司好不好"}
+    {"label": "1", "sentence1": "关于农村土地使用权的法律", "sentence2": "关于农村集体土地使用权的法律咨询-110网免费法律咨询"}
+    {"label": "1", "sentence1": "weregrettoinformyouthat", "sentence2": "weregrettoinformyouthatthematerialsyouorderedare百度知道"}
+    {"label": "1", "sentence1": "莫言", "sentence2": "莫言热爱军旅文学-新华网"}
+    {"label": "1", "sentence1": "唐山市古冶区卑家店大众药房", "sentence2": "唐山市古冶区卑家店平安大药房"}
+    {"label": "1", "sentence1": "一品威客", "sentence2": "一品威客开通vip一对一接单靠谱吗-知乎"}
 
 ## Toolkit_Description
 To make it easier to get started, we have developed [DataCLUE Toolkit (dckit)](dckit), which provides basic data reading, storage and evaluation functions. 
