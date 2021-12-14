@@ -62,12 +62,11 @@ The submission should be the modified training and validation dataset.
 
 ## Expironment_Results
 
-|                                                                                                                                         | IFLYTEK(F1 Score, macro) |
-| :-------------------------------------------------------------------------------------------------------------------------------------: | :----------------------: |
-|                                                                  Human                                                                  |           87.4           |
-| Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |           64.0           |
-|                                                              Model-centric                                                              |           66.0           |
-|                                                              Data-centric                                                               |            ?             |
+|    | CIC (macro F1) | IFLYTEK (macro F1)|TNEWS (macro F1)|AFQMC (macro F1)| 
+| :----:| :----:  | :----:  | :----:  | :----:  | 
+|  Human (in accuracy) | 87.40 |66.00| 71.00|81.00|
+|  Baseline(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>RoBERTa_3L_wwm</a>) |  72.78 | 30.97|46.83|59.04 |
+|   Data-centric | 74.62    |40.15 |49.34| ?|
 
 For the experimental results, see [Single Strategy Results Summary](./baselines/single/README.md) and [Multi Strategy Results Summary](./baselines/multi/README.md)
 
