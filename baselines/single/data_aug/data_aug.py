@@ -25,7 +25,6 @@ def aug_function(sentence, alpha_ri=0.1, alpha_rs=0, num_aug=3):
 def data_aug(data, num_aug=3):
     json_data = data['json']
     df = pd.DataFrame.from_records(json_data)
-    print(df)
     aug_lists = df['sentence'].swifter.apply(aug_function)
     aug_lens = [len(aug_list) for aug_list in aug_lists]
     flatten_list = [j for sub in aug_lists for j in sub]
@@ -34,7 +33,6 @@ def data_aug(data, num_aug=3):
     # remove none
     newdf.dropna(inplace=True)
     data["json"] = newdf.to_dict(orient='records')
-    print(data)
     return data
     # for idx, tmp in enumerate(tqdm(json_data)):
     #     # 扩展相似句：从一个句子变成多个相似的句子的列表
